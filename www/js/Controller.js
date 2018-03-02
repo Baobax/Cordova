@@ -9,25 +9,13 @@ var Controller = function() {
         },
 
         click: function () {
-            if (navigator.userAgent.match(/(iPhone|iPod|iPad)/)) {
-                if(sens == 0) {
-                    $(".card .front img").attr("src", "img/card_front.png");
-                    sens++;
-                }
-                else {
-                    $(".card .front img").attr("src", "img/card_back.png");
-                    sens--;
-                }
+            if(sens == 0) {
+                $(".card").css("transform", "rotateY(180deg)");
+                sens++;
             }
             else {
-                if(sens == 0) {
-                    $(".card").css("transform", "rotateY(180deg)");
-                    sens++;
-                }
-                else {
-                    $(".card").css("transform", "");
-                    sens--;
-                }
+                $(".card").css("transform", "");
+                sens--;
             }
         },
     }
