@@ -6,6 +6,7 @@ var Controller = function() {
             self = this;
 
             $(".card").on("click", self.click);
+            $(".link").on("click", self.changePage);
         },
 
         click: function () {
@@ -18,6 +19,10 @@ var Controller = function() {
                 forward = true;
             }
         },
+
+        changePage: function(e) {
+            alert(e.serialize);
+        }
     }
     controller.initialize();
     return controller;
