@@ -76,22 +76,38 @@ nav a.current {
 }
 
 
+.container {
+    text-align: center;
+}
 
 .card {
     display: inline-block;
     transform-style: preserve-3d;
-    transition: 100ms linear;
+    transition: 200ms linear;
 }
 
-.front img {
+.front {
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
 }
 
-.back img {
+.back {
     position: absolute;
     top: 0;
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
     transform: rotateY(180deg);
+}
+
+.animate {
+    transform-origin: top;
+    transform: rotateY(180deg) scale(2);
+}
+
+.paquet {
+    text-align: center;
+}
+
+.paquet_haut img {
+    margin-bottom: -50%;
 }

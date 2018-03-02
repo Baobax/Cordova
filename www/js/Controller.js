@@ -1,5 +1,5 @@
 var Controller = function() {
-    var sens = 0;
+    var forward = true;
     var controller = {
         self: null,
         initialize: function() {
@@ -9,13 +9,13 @@ var Controller = function() {
         },
 
         click: function () {
-            if(sens == 0) {
-                $(".card").css("transform", "rotateY(180deg)");
-                sens++;
+            if(forward) {
+                $(".card").attr("class", "card animate");
+                forward = false;
             }
             else {
-                $(".card").css("transform", "");
-                sens--;
+                $(".card").attr("class", "card");
+                forward = true;
             }
         },
     }
