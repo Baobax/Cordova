@@ -88,13 +88,14 @@ nav a.current {
     margin-right: -20px;
 }
 
-.card {
+.top_card {
     display: inline-block;
     -webkit-transform-style: preserve-3d;
     transform-style: preserve-3d;
     transition: 200ms linear;
 }
 
+/*
 .front {
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
@@ -108,15 +109,24 @@ nav a.current {
     -webkit-transform: rotateY(180deg);
     transform: rotateY(180deg);
 }
+*/
 
-.check_pref {
-    margin-top: -35px !important;
+.animate_top_card {
+    -webkit-transform: translateY(180px);
+    transform: translateY(30px) rotateX(90deg);
 }
 
-.animate {
+.card {
     -webkit-transform-origin: top;
     transform-origin: top;
-    -webkit-transform: rotateY(180deg) scale(1.8);
-    transform: rotateY(180deg) scale(1.8);
-    margin-top: -40px;
+    -webkit-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+    transition: 200ms linear;
+    transform: scale(0);
+}
+
+.animate_card {
+    margin-top: -260px;
+    -webkit-transform: scale(1.6);
+    transform: scale(1.6);
 }
