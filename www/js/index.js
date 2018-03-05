@@ -11,6 +11,7 @@ var app = {
     // 'pause', 'resume', etc.
     onDeviceReady: function() {
         controller = new Controller();
+        this.receivedEvent('deviceready');
     },
 };
 
