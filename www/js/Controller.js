@@ -5,11 +5,12 @@ var Controller = function() {
         initialize: function() {
             self = this;
 
-            $(".card").on("click", self.click);
-            $(".link").on("click", self.changePage);
+            $(".card").on("click", self.clickAnimateFlip);
+            $(".check_pref").on("click", self.clickPref);
+            //$(".link").on("click", self.changePage);
         },
 
-        click: function () {
+        clickAnimateFlip: function () {
             if(forward) {
                 $(".card").attr("class", "card animate");
                 forward = false;
@@ -20,8 +21,12 @@ var Controller = function() {
             }
         },
 
-        changePage: function(e) {
-            alert(e.serialize);
+        clickPref: function (e) {
+            e.stopImmediatePropagation();
+        },
+
+        changePage: function() {
+            alert("Oui");
         }
     }
     controller.initialize();
