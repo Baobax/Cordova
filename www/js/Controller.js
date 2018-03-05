@@ -5,32 +5,37 @@ var Controller = function() {
         initialize: function() {
             self = this;
 
-            $(".top_card").on("click", self.clickAnimateFlip);
-            //$(".link").on("click", self.changePage);
+            $(".top_card").on("click", self.clickAnimateFlipTopCard);
+            $(".card").on("click", self.clickAnimateFlipCard);
         },
 
-        clickAnimateFlip: function () {
-            //alert(Math.floor((Math.random() * 54) + 1));
+        clickAnimateFlipTopCard: function () {
+            var numCard = Math.floor((Math.random() * 2) + 1);
+
+            $(".top_card").transition({y:-50, duration: 200});
+            $(".top_card").transition({y:0, duration: 200});
+            $(".card").html("<img class='front' src='img/cards/" + numCard + "_card_front.png'>"
+                + "<img class='back' src='img/cards/" + numCard + "_card_back.png'>");
+            $(".card")
+                .transition({scale:1.6, duration: 200})
+                .transition({y:-160, duration: 200});
+        },
+
+        clickAnimateFlipCard: function () {
             if(forward) {
-                $(".top_card").attr("class", "top_card animate_top_card");
-                $(".card").html("<img class='front' src='img/card_front.png'><br>"
-                    + "<img class='back' src='img/card_back.png'>");
-                $(".card").attr("class", "card animate_card");
-                $(".card .back").unbind();
-                $(".card .back").on("click", self.clickAnimateFlip);
+                $(".card").transition({perspective:'1000px', rotateY:'180deg', duration: 200});
                 forward = false;
             }
             else {
-                $(".top_card").attr("class", "top_card");
-                $(".card").attr("class", "card");
-                //$(".card").empty();
+                $(".card")
+                    .transition({perspective:'1000px', rotateY:'0deg', duration: 20})
+                    .transition({scale:0, duration: 200})
+                    .transition({y:0, duration: 200});
+                $(".top_card").transition({y:-50, duration: 200});
+                $(".top_card").transition({y:0, duration: 200});
                 forward = true;
             }
         },
-
-        changePage: function() {
-            alert("Oui");
-        }
     }
     controller.initialize();
     return controller;

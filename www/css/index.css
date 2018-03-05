@@ -95,28 +95,8 @@ nav a.current {
     transition: 200ms linear;
 }
 
-/*
-.front {
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
-}
-
-.back {
-    position: absolute;
-    top: 0;
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
-    -webkit-transform: rotateY(180deg);
-    transform: rotateY(180deg);
-}
-*/
-
-.animate_top_card {
-    -webkit-transform: translateY(180px);
-    transform: translateY(30px) rotateX(90deg);
-}
-
 .card {
+    display: inline-block;
     -webkit-transform-origin: top;
     transform-origin: top;
     -webkit-transform-style: preserve-3d;
@@ -125,8 +105,16 @@ nav a.current {
     transform: scale(0);
 }
 
-.animate_card {
-    margin-top: -260px;
-    -webkit-transform: scale(1.6);
-    transform: scale(1.6);
+.front {
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
+
+.back {
+    position: absolute;
+    left: 0;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-transform: rotateY(180deg);
+    transform: rotateY(180deg);
 }
