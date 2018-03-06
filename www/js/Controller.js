@@ -15,8 +15,10 @@ var Controller = function() {
             $(".top_card")
                 .transition({y:-50, duration: 200})
                 .transition({y:0, duration: 200});
+
             $(".card").html("<img class='front' src='img/cards/" + numCard + "_card_front.png'>"
                 + "<img class='back' src='img/cards/" + numCard + "_card_back.png'>");
+
             $(".card")
                 .transition({scale:1.6, duration: 200})
                 .transition({y:-160, duration: 200});
@@ -25,6 +27,7 @@ var Controller = function() {
         clickAnimateFlipCard: function () {
             if(forward) {
                 $(".card").transition({perspective:'1000px', rotateY:'180deg', duration: 200});
+                
                 forward = false;
             }
             else {
@@ -32,9 +35,11 @@ var Controller = function() {
                     .transition({perspective:'1000px', rotateY:'0deg', duration: 20})
                     .transition({y:0, duration: 200})
                     .transition({scale:0, duration: 200});
+
                 $(".top_card")
                     .transition({y:-50, duration: 300})
                     .transition({y:0, duration: 200});
+
                 forward = true;
             }
         },

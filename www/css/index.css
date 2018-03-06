@@ -1,5 +1,5 @@
 
- * {
+* {
     -webkit-tap-highlight-color: rgba(0,0,0,0); /* make transparent link selection, adjust last value opacity 0 to 1.0 */
 }
 
@@ -60,6 +60,11 @@ nav a.current {
 
 
 /*Homepage*/
+img {
+    /*width: 155px;
+    height: 155px;*/
+}
+
 .container {
     text-align: center;
 }
@@ -111,10 +116,18 @@ nav a.current {
 }
 
 .back {
-    position: absolute;
+    position: fixed;
     left: 0;
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
     -webkit-transform: rotateY(180deg);
     transform: rotateY(180deg);
+}
+
+
+@media only screen and (min-device-width : 768px) { /* 7" tablets */
+
+}
+@media only screen and (min-device-width : 1024px) { /* 10" tablets and iPad */
+
 }
