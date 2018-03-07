@@ -11,17 +11,21 @@ var Controller = function() {
 
         clickAnimateFlipTopCard: function () {
             var numCard = Math.floor((Math.random() * 2) + 1);
+            var cardHeight = ($(".top_card img").height() / 1.6) + ($(".paquet").height() / 1.6) + 10;
+
 
             $(".top_card")
                 .transition({y:-50, duration: 200})
                 .transition({y:0, duration: 200});
 
-            $(".card").html("<img class='front' src='img/cards/" + numCard + "_card_front.png'>"
-                + "<img class='back' src='img/cards/" + numCard + "_card_back.png'>");
+            $(".card .front").attr("src", "img/cards/" + numCard + "_card_front.png");
+            $(".card .back").attr("src", "img/cards/" + numCard + "_card_back.png");
+
+            $(".res").html(cardHeight);
 
             $(".card")
                 .transition({scale:1.6, duration: 200})
-                .transition({y:-160, duration: 200});
+                .transition({y:-cardHeight, duration: 200});
         },
 
         clickAnimateFlipCard: function () {
