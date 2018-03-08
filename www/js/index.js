@@ -9,7 +9,7 @@ function initialize() {
 }
 
 function onDeviceReady() {
-    $(".top_card").on("click", clickAnimateFlipTopCard);
+    $("#top_card").on("click", clickAnimateFlipTopCard);
     $(".card").on("click", clickAnimateFlipCard);
 }
 
@@ -59,19 +59,19 @@ function clickAnimateFlipTopCard() {
     $(".card .back img").attr("src", "img/cards/" + numCard + "_card_back.png");
 
     $(".card")
-    .transition({scale:1, duration: 200});
+        .transition({scale:1, duration: 200});
 }
 
 function clickAnimateFlipCard() {
    if(forward) {
        $(".card").transition({rotateY:'180deg', duration: 200});
+
        forward = false;
    }
    else {
        $(".card")
-       .transition({rotateY:'0deg', duration: 20})
-       .transition({y:0, duration: 200})
-       .transition({scale:0, duration: 200});
+           .transition({scale:0, duration: 200})
+           .transition({rotateY:'0deg', duration: 20});
 
        forward = true;
    }
