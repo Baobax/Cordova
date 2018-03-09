@@ -18,15 +18,6 @@ body {
     width:100%;
 }
 
-h1 {
-    font-size:24px;
-    font-weight:normal;
-    margin:0px;
-    overflow:visible;
-    padding:0px;
-    text-align:center;
-}
-
 
 /*------Mes modifs------*/
 html, body { /** for a container in all the screen */
@@ -48,6 +39,26 @@ html, body { /** for a container in all the screen */
     width: 50%;
     top: 50%;
     left: 50%;
+}
+
+#c1 img, #c2 img, #c3 img, #c4 img, #top_card img {
+    width: 100%;
+}
+
+/*--Pour pas que le paquet soit plus grand que l'écran en landscape--*/
+@media only screen and (orientation: landscape) {
+    #c1, #c2, #c3, #c4, #top_card {
+        position: absolute;
+        width: auto;
+        height: 60%;
+        top: 50%;
+        left: 50%;
+    }
+
+    #c1 img, #c2 img, #c3 img, #c4 img, #top_card img {
+        width: auto;
+        height: 100%;
+    }
 }
 
 #c1 {
@@ -81,7 +92,7 @@ html, body { /** for a container in all the screen */
     transform-origin: top;
     transform-style: preserve-3d;
     position: absolute;
-    top:auto;
+    top: auto;
     left: 0;
     right: 0;
     bottom: 0;
