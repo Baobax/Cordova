@@ -39,6 +39,7 @@ html, body { /** for a container in all the screen */
     width: 50%;
     top: 50%;
     left: 50%;
+    z-index: 10;
 }
 
 #c1 img, #c2 img, #c3 img, #c4 img, #top_card img {
@@ -102,6 +103,7 @@ html, body { /** for a container in all the screen */
     text-align: center;
     -webkit-transform: scale(0);
     transform: scale(0);
+    z-index: 10;
 }
 
 .front img {
@@ -126,6 +128,22 @@ html, body { /** for a container in all the screen */
     min-height: 100%;
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
+    -webkit-transform: rotateY(180deg);
+    transform: rotateY(180deg);
+}
+
+.info_contact_front, .info_contact_back {
+    position: absolute;
+    text-align: center;
+    top: 10%;
+    left: 10%;
+    width: 80%;
+    height: 80%;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
+
+.info_contact_back {
     -webkit-transform: rotateY(180deg);
     transform: rotateY(180deg);
 }

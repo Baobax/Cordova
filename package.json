@@ -14,6 +14,7 @@
         "cordova-browser": "^5.0.3",
         "cordova-ios": "^4.5.4",
         "cordova-plugin-badge": "^0.8.7",
+        "cordova-plugin-contacts": "^3.0.1",
         "cordova-plugin-device": "^2.0.1",
         "cordova-plugin-local-notification": "^0.9.0-beta.2",
         "cordova-plugin-whitelist": "^1.3.3"
@@ -21,12 +22,15 @@
     "cordova": {
         "plugins": {
             "cordova-plugin-whitelist": {},
-            "cordova-plugin-local-notification": {}
+            "cordova-plugin-local-notification": {},
+            "cordova-plugin-contacts": {
+                "CONTACTS_USAGE_DESCRIPTION": "Display contact cards"
+            }
         },
         "platforms": [
             "browser",
-            "ios",
-            "android"
+            "android",
+            "ios"
         ]
     }
 }

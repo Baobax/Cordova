@@ -24,7 +24,10 @@
         <allow-intent href="itms-apps:*" />
     </platform>
     <plugin name="cordova-plugin-local-notification" spec="^0.9.0-beta.2" />
+    <plugin name="cordova-plugin-contacts" spec="^3.0.1">
+        <variable name="CONTACTS_USAGE_DESCRIPTION" value="Display contact cards" />
+    </plugin>
     <engine name="browser" spec="^5.0.3" />
-    <engine name="ios" spec="^4.5.4" />
     <engine name="android" spec="^7.0.0" />
+    <engine name="ios" spec="^4.5.4" />
 </widget>
