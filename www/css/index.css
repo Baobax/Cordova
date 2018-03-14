@@ -10,9 +10,7 @@ body {
     background-color:#E4E4E4;
     background-attachment:fixed;
     font-family:'HelveticaNeue-Light', 'HelveticaNeue', Helvetica, Arial, sans-serif;
-    text-transform:uppercase;
 }
-
 
 /*------Mes modifs------*/
 html, body { /** for a container in all the screen */

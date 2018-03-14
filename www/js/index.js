@@ -12,6 +12,7 @@ function onDeviceReady() {
     $("#top_card").on("click", clickAnimateFlipTopCard);
     $(".card").on("click", clickAnimateFlipCard);
     getContacts();
+    $("#form_add_contact").on("submit", createContact);
 }
 
 function onPause() {
@@ -146,7 +147,7 @@ function onSuccess(contacts) {
 }
 
 function onError(contactError) {
-    alert("Error on contacts !");
+    alert("Erreur de récupération des contacts !");
 }
 
 function getContacts() {
@@ -155,6 +156,42 @@ function getContacts() {
     options.multiple = true;
     var filter = [""];
     navigator.contacts.find(filter, onSuccess, onError, options);
+}
+
+function successCreateContact(contacts) {
+    $(".validation_errors").empty();
+    $("#prenom").val("");
+    $("#nom").val("");
+    $("#numTel").val("");
+    alert("Contact créé avec succès");
+    //On update la liste des contacts pour les contact cards
+    getContacts();
+}
+
+function errorCreateContact(contactError) {
+    $(".validation_errors").empty();
+    alert("Erreur lors de la création du contact");
+}
+
+function createContact(ev) {
+    ev.preventDefault();
+
+    if($("#nom").val().trim() != "" && $("#prenom").val().trim() != "") {
+        var newContact = navigator.contacts.create();
+        var name = new ContactName();
+        name.givenName = $("#prenom").val().trim();
+        name.familyName = $("#nom").val().trim();
+        newContact.name = name;
+        if($("#numTel").val().trim() != "") {
+            var phoneNumbers = [];
+            phoneNumbers[0] = new ContactField('mobile', $("#numTel").val().trim(), true);
+            newContact.phoneNumbers = phoneNumbers;
+        }
+        newContact.save(successCreateContact, errorCreateContact);
+    }
+    else {
+        $(".validation_errors").html("<b style='color:red;'>Les champs nom et prénom sont requis</b>");
+    }
 }
 
 initialize();

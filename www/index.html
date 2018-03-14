@@ -18,7 +18,7 @@
             <div data-role="navbar">
                 <ul>
                     <li><a href="#" class="ui-btn-active ui-state-persist">Contact cards</a></li>
-                    <li><a href="#add_a_contact">Add a contact</a></li>
+                    <li><a href="#add_a_contact">Créer un contact</a></li>
                 </ul>
             </div>
         </div>
@@ -79,12 +79,30 @@
             <div data-role="navbar">
                 <ul>
                     <li><a href="#contact_cards">Contact cards</a></li>
-                    <li><a href="#" class="ui-btn-active ui-state-persist">Add a contact</a></li>
+                    <li><a href="#" class="ui-btn-active ui-state-persist">Créer un contact</a></li>
                 </ul>
             </div>
         </div>
         <div role="main" class="ui-content">
-            <h1>Page 2</h1>
+            <form id="form_add_contact" action="#add_a_contact" method="get" data-ajax="false">
+                <h2>Créer un contact</h2>
+                <div class="validation_errors">
+                </div>
+                <fieldset data-role="fieldcontain"> 
+                    <label for="nom">Nom :</label>
+                    <input type="text" name="nom" id="nom" value="">
+                </fieldset>
+                <fieldset data-role="fieldcontain"> 
+                    <label for="prenom">Prénom :</label>
+                    <input type="text" name="prenom" id="prenom" value="">
+                </fieldset>
+                <fieldset data-role="fieldcontain"> 
+                    <label for="numTel">Numéro de téléphone :</label>
+                    <input type="tel" name="numTel" id="numTel" value="">
+                </fieldset>
+
+                <input type="submit" value="Créer">
+            </form>
         </div>
     </div>
 
