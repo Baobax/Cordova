@@ -27,7 +27,10 @@
     <plugin name="cordova-plugin-contacts" spec="^3.0.1">
         <variable name="CONTACTS_USAGE_DESCRIPTION" value="Display contact cards" />
     </plugin>
+    <edit-config file="*-Info.plist" mode="merge" target="NSContactsUsageDescription">
+        <string>Need contacts to display contact cards</string>
+    </edit-config>
     <engine name="browser" spec="^5.0.3" />
-    <engine name="android" spec="^7.0.0" />
     <engine name="ios" spec="^4.5.4" />
+    <engine name="android" spec="^7.0.0" />
 </widget>

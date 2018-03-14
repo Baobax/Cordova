@@ -13,52 +13,78 @@
     <title>Hello World</title>
 </head>
 <body>
-    <div class="container">
-        <div class="paquet">
-            <picture id="c1">
-                <source media="(min-width: 650px)" srcset="img/card_back.png"/>
-                <source media="(min-width: 465px)" srcset="img/card_back.png"/>
-                <img src="img/card_back.png">
-            </picture>
-            <picture id="c2">
-                <source media="(min-width: 650px)" srcset="img/card_back.png"/>
-                <source media="(min-width: 465px)" srcset="img/card_back.png"/>
-                <img src="img/card_back.png">
-            </picture>
-            <picture id="c3">
-                <source media="(min-width: 650px)" srcset="img/card_back.png"/>
-                <source media="(min-width: 465px)" srcset="img/card_back.png"/>
-                <img src="img/card_back.png">
-            </picture>
-            <picture id="c4">
-                <source media="(min-width: 650px)" srcset="img/card_back.png"/>
-                <source media="(min-width: 465px)" srcset="img/card_back.png"/>
-                <img src="img/card_back.png">
-            </picture>
-            <picture id="top_card">
-                <source media="(min-width: 650px)" srcset="img/card_back.png"/>
-                <source  media="(min-width: 465px)" srcset="img/card_back.png"/>
-                <img src="img/card_back.png">
-            </picture>
+    <div data-role="page" class="container" id="contact_cards">
+        <div data-role="header">
+            <div data-role="navbar">
+                <ul>
+                    <li><a href="#" class="ui-btn-active ui-state-persist">Contact cards</a></li>
+                    <li><a href="#add_a_contact">Add a contact</a></li>
+                </ul>
+            </div>
         </div>
-        <div class="card">
-            <picture class="front">
-                <source class="small" media="(min-width: 650px)" srcset=""/>
-                <source class="medium" media="(min-width: 465px)" srcset=""/>
-                <img src="" alt="Front card">
-                <div class="info_contact_front">
-                    
-                </div>
-            </picture>
+        <div role="main" class="ui-content">
+            <div class="paquet">
+                <picture id="c1">
+                    <source media="(min-width: 650px)" srcset="img/card_back.png"/>
+                    <source media="(min-width: 465px)" srcset="img/card_back.png"/>
+                    <img src="img/card_back.png">
+                </picture>
+                <picture id="c2">
+                    <source media="(min-width: 650px)" srcset="img/card_back.png"/>
+                    <source media="(min-width: 465px)" srcset="img/card_back.png"/>
+                    <img src="img/card_back.png">
+                </picture>
+                <picture id="c3">
+                    <source media="(min-width: 650px)" srcset="img/card_back.png"/>
+                    <source media="(min-width: 465px)" srcset="img/card_back.png"/>
+                    <img src="img/card_back.png">
+                </picture>
+                <picture id="c4">
+                    <source media="(min-width: 650px)" srcset="img/card_back.png"/>
+                    <source media="(min-width: 465px)" srcset="img/card_back.png"/>
+                    <img src="img/card_back.png">
+                </picture>
+                <picture id="top_card">
+                    <source media="(min-width: 650px)" srcset="img/card_back.png"/>
+                    <source  media="(min-width: 465px)" srcset="img/card_back.png"/>
+                    <img src="img/card_back.png">
+                </picture>
+            </div>
+            <div class="card">
+                <picture class="front">
+                    <source class="small" media="(min-width: 650px)" srcset=""/>
+                    <source class="medium" media="(min-width: 465px)" srcset=""/>
+                    <img src="" alt="Front card">
+                    <div class="info_contact_front">
 
-            <picture class="back">
-                <source class="small" media="(min-width: 650px)" srcset=""/>
-                <source class="medium" media="(min-width: 465px)" srcset=""/>
-                <img src="" alt="Back card">
-                <div class="info_contact_back">
-                    
-                </div>
-            </picture>
+                    </div>
+                </picture>
+
+                <picture class="back">
+                    <source class="small" media="(min-width: 650px)" srcset=""/>
+                    <source class="medium" media="(min-width: 465px)" srcset=""/>
+                    <img src="" alt="Back card">
+                    <div class="info_contact_back">
+
+                    </div>
+                </picture>
+            </div>
+        </div>
+    </div>
+
+    <!-- /////////////////////////////////////////////////////////////////////////////////// -->
+
+    <div data-role="page" id="add_a_contact">
+        <div data-role="header">
+            <div data-role="navbar">
+                <ul>
+                    <li><a href="#contact_cards">Contact cards</a></li>
+                    <li><a href="#" class="ui-btn-active ui-state-persist">Add a contact</a></li>
+                </ul>
+            </div>
+        </div>
+        <div role="main" class="ui-content">
+            <h1>Page 2</h1>
         </div>
     </div>
 

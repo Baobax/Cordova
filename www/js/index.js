@@ -1,5 +1,5 @@
-var forward = true;
-var userContacts, nbContacts;
+var _forward = true;
+var _userContacts, _nbContacts = 0;
 
 //Cordova events------------------------------------------------
 function initialize() {
@@ -34,7 +34,7 @@ function onResume() {
 
 //My events------------------------------------------------
 function clickAnimateFlipTopCard() {
-    var numCard = Math.floor((Math.random() * nbContacts) + 0);
+    var numCard = Math.floor((Math.random() * _nbContacts) + 0);
     
     //Changing front card src
     $(".card .front .small").attr("srcset", "img/card.png");
@@ -46,63 +46,103 @@ function clickAnimateFlipTopCard() {
     $(".card .back .medium").attr("srcset", "img/card.png");
     $(".card .back img").attr("src", "img/card.png");
 
-    //19 pour tester le contact qui n'a pas de nom
     showContactInfos(numCard);
 
     $(".card").transition({scale:1, duration: 200});
 }
 
 function showContactInfos(numCard) {
-    //Displaying contact informations on the front of the card
-    $(".info_contact_front").empty();
-    if((userContacts[numCard].photos) != null) {
-        $(".info_contact_front").append(
-            "<img src='" + userContacts[numCard].photos[0].value + "'><br>"
-            );
-    }
-    //if((userContacts[numCard].name.formatted) != null) {
-        $(".info_contact_front").append(
-            userContacts[numCard].name.formatted + "<br>"
-            );
-    //}
+    if(_nbContacts > 0) {
+        var frontCard = "", backCard = "";
 
-    if((userContacts[numCard].phoneNumbers) != null) {
-        (userContacts[numCard].phoneNumbers).forEach(function(element) {
-            $(".info_contact_front").append(
-                element.value + "<br>"
-                );
-        });
-    }
+        //Displaying contact informations on the front of the card
+        if((_userContacts[numCard].photos) != null) {
+            frontCard += "<p><img class='img_contact' src='" + _userContacts[numCard].photos[0].value + "'></p><br><hr><br>";
+        }
+        else {
+            frontCard += "<p><img class='img_contact' src='img/blank_profile_picture.png'></p><br><hr><br>";
+        }
 
-    //Displaying contact informations on the back of the card
-    $(".info_contact_back").empty();
-    if((userContacts[numCard].addresses) != null) {
-        (userContacts[numCard].addresses).forEach(function(element) {
-            $(".info_contact_back").append(
-                element.formatted + "<br>"
-                );
-        });
+        if((_userContacts[numCard].name.formatted) != null) {
+            frontCard += "<p><b>Nom</b><br>" + _userContacts[numCard].name.formatted + "</p>";
+        }
+        else {
+            frontCard += "<p><b>Nom</b><br>-</p>";
+        }
+
+        if((_userContacts[numCard].phoneNumbers) != null) {
+            frontCard += "<p><b>Numéro(s) de téléphone</b><br>";
+            (_userContacts[numCard].phoneNumbers).forEach(function(element) {
+                frontCard += element.value + "<br>";
+            });
+            frontCard += "</p>";
+        }
+        else {
+            frontCard += "<p><b>Numéro(s) de téléphone</b><br>-</p>";
+        }
+
+        if((_userContacts[numCard].emails) != null) {
+            frontCard += "<p><b>eMail(s)</b><br>";
+            (_userContacts[numCard].emails).forEach(function(element) {
+                frontCard += element.value + "<br>";
+            });
+            frontCard += "</p>";
+        }
+        else {
+            frontCard += "<p><b>eMail(s)</b><br>-</p>";
+        }
+
+        $(".info_contact_front").html(frontCard);
+
+
+        //Displaying contact informations on the back of the card
+        if((_userContacts[numCard].addresses) != null) {
+            backCard += "<p><b>Adresse(s)</b><br>";
+            (_userContacts[numCard].addresses).forEach(function(element) {
+                backCard += element.streetAddress + ", " + element.locality + "<br>";
+            });
+            backCard += "</p>";
+        }
+        else {
+            backCard += "<p><b>Adresse(s)</b><br>-</p>";
+        }
+
+        if((_userContacts[numCard].urls) != null) {
+            backCard += "<p><b>Site(s) web</b><br>";
+            (_userContacts[numCard].urls).forEach(function(element) {
+                backCard += element.value + "<br>";
+            });
+            backCard += "</p>";
+        }
+        else {
+            backCard += "<p><b>Site(s) web</b><br>-</p>";
+        }
+
+        $(".info_contact_back").html(backCard);
+    }
+    else {
+        $(".info_contact_front").html("<p><b>Vous n'avez aucun contact</b></p>");
     }
 }
 
 function clickAnimateFlipCard() {
-    if(forward) {
+    if(_forward) {
         $(".card").transition({rotateY:'180deg', duration: 200});
 
-        forward = false;
+        _forward = false;
     }
     else {
         $(".card")
         .transition({scale:0, duration: 200})
         .transition({rotateY:'0deg', duration: 20});
 
-        forward = true;
+        _forward = true;
     }
 }
 
 function onSuccess(contacts) {
-    userContacts = contacts;
-    nbContacts = contacts.length;
+    _userContacts = contacts;
+    _nbContacts = contacts.length;
 }
 
 function onError(contactError) {

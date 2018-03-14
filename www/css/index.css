@@ -10,12 +10,7 @@ body {
     background-color:#E4E4E4;
     background-attachment:fixed;
     font-family:'HelveticaNeue-Light', 'HelveticaNeue', Helvetica, Arial, sans-serif;
-    font-size:12px;
-    height:100%;
-    margin:0px;
-    padding:0px;
     text-transform:uppercase;
-    width:100%;
 }
 
 
@@ -106,7 +101,7 @@ html, body { /** for a container in all the screen */
     z-index: 10;
 }
 
-.front img {
+.front > img {
     position: absolute;
     top:auto;
     left: 0;
@@ -118,7 +113,7 @@ html, body { /** for a container in all the screen */
     backface-visibility: hidden;
 }
 
-.back img {
+.back > img {
     position: absolute;
     top:auto;
     left: 0;
@@ -135,15 +130,31 @@ html, body { /** for a container in all the screen */
 .info_contact_front, .info_contact_back {
     position: absolute;
     text-align: center;
-    top: 10%;
+    top: 5%;
     left: 10%;
     width: 80%;
-    height: 80%;
+    height: 90%;
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
+}
+
+/*--Marges pour l'écran en landscape--*/
+@media only screen and (orientation: landscape) {
+    .info_contact_front, .info_contact_back {
+        top: 20%;
+        left: 15%;
+        width: 70%;
+        height: 60%;
+    }
 }
 
 .info_contact_back {
     -webkit-transform: rotateY(180deg);
     transform: rotateY(180deg);
+}
+
+.img_contact {
+    width: 60%;
+    height: auto;
+    border-radius: 10%;
 }
