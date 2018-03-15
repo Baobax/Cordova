@@ -15,6 +15,12 @@
     },
     "cordova-plugin-contacts": {
       "PACKAGE_NAME": "io.cordova.hellocordova"
+    },
+    "cordova-call": {
+      "PACKAGE_NAME": "io.cordova.hellocordova"
+    },
+    "cordova-sms-plugin": {
+      "PACKAGE_NAME": "io.cordova.hellocordova"
     }
   },
   "dependent_plugins": {

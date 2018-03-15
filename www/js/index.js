@@ -13,6 +13,8 @@ function onDeviceReady() {
     $(".card").on("click", clickAnimateFlipCard);
     getContacts();
     $("#form_add_contact").on("submit", createContact);
+    //cordova.plugins.CordovaCall.receiveCall('David Marcus');
+    $("#btn_sms").on("click", sendSms);
 }
 
 function onPause() {
@@ -192,6 +194,29 @@ function createContact(ev) {
     else {
         $(".validation_errors").html("<b style='color:red;'>Les champs nom et prénom sont requis</b>");
     }
+}
+
+function successSendSms() {
+    $('#numberTxt').val("");
+    $('#messageTxt').val("");
+    alert('Message envoyé');
+}
+
+function sendSms() {
+    var number = $('#numberTxt').val().toString(); /* iOS: ensure number is actually a string */
+    var message = $('#messageTxt').val();
+    console.log("number=" + number + ", message= " + message);
+
+    var options = {
+        replaceLineBreaks: true, // true to replace \n by a new line, false by default
+        android: {
+            //intent: 'INTENT'  // send SMS with the native android SMS messaging
+            intent: '' // send SMS without open any other app
+        }
+    };
+
+    var error = function (e) { alert('Erreur d\'envoi :' + e); };
+    sms.send(number, message, options, successSendSms, error);
 }
 
 initialize();
