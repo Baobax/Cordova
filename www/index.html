@@ -19,6 +19,7 @@
                 <ul>
                     <li><a href="#" class="ui-btn-active ui-state-persist">Contact cards</a></li>
                     <li><a href="#add_a_contact">Créer un contact</a></li>
+                    <li><a href="#show_camera">Caméra</a></li>
                 </ul>
             </div>
         </div>
@@ -80,10 +81,15 @@
                 <ul>
                     <li><a href="#contact_cards">Contact cards</a></li>
                     <li><a href="#" class="ui-btn-active ui-state-persist">Créer un contact</a></li>
+                    <li><a href="#show_camera">Caméra</a></li>
                 </ul>
             </div>
         </div>
         <div role="main" class="ui-content">
+            <button id="btn_call">Recevoir un appel</button>
+
+            <hr>
+
             <h2>Envoyer un SMS</h2>
             <input id="numberTxt" placeholder="Enter mobile number" value="" type="tel" />
             <textarea id="messageTxt" placeholder="Enter message"></textarea>
@@ -117,6 +123,25 @@
             <a href="sms:">Test sms</a><br>
             <a href="geo:">Test geo</a><br>
             <a href="http://www.google.fr/">Test web</a>
+        </div>
+    </div>
+
+    <!-- /////////////////////////////////////////////////////////////////////////////////// -->
+
+    <div data-role="page" id="show_camera">
+        <div data-role="header">
+            <div data-role="navbar">
+                <ul>
+                    <li><a href="#contact_cards">Contact cards</a></li>
+                    <li><a href="#add_a_contact">Créer un contact</a></li>
+                    <li><a href="#" class="ui-btn-active ui-state-persist">Caméra</a></li>
+                </ul>
+            </div>
+        </div>
+        <div role="main" class="ui-content">
+            <button id="btn_photo">Prendre une photo</button>
+
+            <img id="photo" style="width: 100%;" src="">
         </div>
     </div>
 

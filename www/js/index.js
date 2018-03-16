@@ -13,8 +13,9 @@ function onDeviceReady() {
     $(".card").on("click", clickAnimateFlipCard);
     getContacts();
     $("#form_add_contact").on("submit", createContact);
-    //cordova.plugins.CordovaCall.receiveCall('David Marcus');
+    $("#btn_call").on("click", receiveCall);
     $("#btn_sms").on("click", sendSms);
+    $("#btn_photo").on("click", takePhoto);
 }
 
 function onPause() {
@@ -196,6 +197,10 @@ function createContact(ev) {
     }
 }
 
+function receiveCall() {
+    cordova.plugins.CordovaCall.receiveCall('David Marcus');
+}
+
 function successSendSms() {
     $('#numberTxt').val("");
     $('#messageTxt').val("");
@@ -203,20 +208,45 @@ function successSendSms() {
 }
 
 function sendSms() {
-    var number = $('#numberTxt').val().toString(); /* iOS: ensure number is actually a string */
-    var message = $('#messageTxt').val();
-    console.log("number=" + number + ", message= " + message);
+    if($('#numberTxt').val().toString() != "" && $('#messageTxt').val() != "") {
+        var number = $('#numberTxt').val().toString(); /* iOS: ensure number is actually a string */
+        var message = $('#messageTxt').val();
+        console.log("number=" + number + ", message= " + message);
 
+        var options = {
+            replaceLineBreaks: true, // true to replace \n by a new line, false by default
+            android: {
+                //intent: 'INTENT'  // send SMS with the native android SMS messaging
+                intent: '' // send SMS without open any other app
+            }
+        };
+
+        var error = function (e) { alert('Erreur d\'envoi :' + e); };
+        sms.send(number, message, options, successSendSms, error);
+    }
+}
+
+function failPhoto(message) {
+    if (message != "No Image Selected") {
+        alert('Failed because: ' + message);
+    }
+}
+
+function successPhoto(imageURI) {
+    $("#photo").attr("src", imageURI);
+}
+
+function takePhoto() {
     var options = {
-        replaceLineBreaks: true, // true to replace \n by a new line, false by default
-        android: {
-            //intent: 'INTENT'  // send SMS with the native android SMS messaging
-            intent: '' // send SMS without open any other app
-        }
-    };
+        // Some common settings are 20, 50, and 100
+        quality: 50,
+        destinationType: Camera.DestinationType.FILE_URI,
+        encodingType: Camera.EncodingType.JPEG,
+        mediaType: Camera.MediaType.PICTURE,
+        correctOrientation: true  //Corrects Android orientation quirks
+    }
 
-    var error = function (e) { alert('Erreur d\'envoi :' + e); };
-    sms.send(number, message, options, successSendSms, error);
+    navigator.camera.getPicture(successPhoto, failPhoto, options);
 }
 
 initialize();
