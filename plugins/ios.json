@@ -7,22 +7,22 @@
     "files": {}
   },
   "installed_plugins": {
+    "cordova-call": {
+      "PACKAGE_NAME": "io.cordova.hellocordova"
+    },
+    "cordova-plugin-camera": {
+      "PACKAGE_NAME": "io.cordova.hellocordova"
+    },
+    "cordova-plugin-contacts": {
+      "PACKAGE_NAME": "io.cordova.hellocordova"
+    },
     "cordova-plugin-local-notification": {
       "PACKAGE_NAME": "io.cordova.hellocordova"
     },
     "cordova-plugin-whitelist": {
       "PACKAGE_NAME": "io.cordova.hellocordova"
     },
-    "cordova-plugin-contacts": {
-      "PACKAGE_NAME": "io.cordova.hellocordova"
-    },
     "cordova-sms-plugin": {
-      "PACKAGE_NAME": "io.cordova.hellocordova"
-    },
-    "cordova-call": {
-      "PACKAGE_NAME": "io.cordova.hellocordova"
-    },
-    "cordova-plugin-camera": {
       "PACKAGE_NAME": "io.cordova.hellocordova"
     }
   },

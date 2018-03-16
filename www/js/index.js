@@ -9,13 +9,13 @@ function initialize() {
 function onDeviceReady() {
     document.addEventListener("pause", onPause, false);
     document.addEventListener("resume", onResume, false);
-    $("#top_card").on("click", clickAnimateFlipTopCard);
-    $(".card").on("click", clickAnimateFlipCard);
+    $("#top_card").on("touchend", clickAnimateFlipTopCard);
+    $(".card").on("touchend", clickAnimateFlipCard);
     getContacts();
     $("#form_add_contact").on("submit", createContact);
-    $("#btn_call").on("click", receiveCall);
-    $("#btn_sms").on("click", sendSms);
-    $("#btn_photo").on("click", takePhoto);
+    $("#btn_call").on("touchend", receiveCall);
+    $("#btn_sms").on("touchend", sendSms);
+    $("#btn_photo").on("touchend", takePhoto);
 }
 
 function onPause() {
@@ -243,7 +243,7 @@ function takePhoto() {
         destinationType: Camera.DestinationType.FILE_URI,
         encodingType: Camera.EncodingType.JPEG,
         mediaType: Camera.MediaType.PICTURE,
-        correctOrientation: true  //Corrects Android orientation quirks
+        correctOrientation: true //Corrects Android orientation quirks
     }
 
     navigator.camera.getPicture(successPhoto, failPhoto, options);
