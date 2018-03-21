@@ -16,7 +16,7 @@
     "cordova-plugin-contacts": {
       "PACKAGE_NAME": "io.cordova.hellocordova"
     },
-    "cordova-plugin-local-notification": {
+    "cordova-plugin-splashscreen": {
       "PACKAGE_NAME": "io.cordova.hellocordova"
     },
     "cordova-plugin-whitelist": {
@@ -24,13 +24,16 @@
     },
     "cordova-sms-plugin": {
       "PACKAGE_NAME": "io.cordova.hellocordova"
+    },
+    "cordova-plugin-local-notification": {
+      "PACKAGE_NAME": "io.cordova.hellocordova"
     }
   },
   "dependent_plugins": {
-    "cordova-plugin-badge": {
+    "cordova-plugin-device": {
       "PACKAGE_NAME": "io.cordova.hellocordova"
     },
-    "cordova-plugin-device": {
+    "cordova-plugin-badge": {
       "PACKAGE_NAME": "io.cordova.hellocordova"
     }
   }

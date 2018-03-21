@@ -29,83 +29,37 @@ Config.xml file:
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />
     </platform>
-    <plugin name="cordova-plugin-local-notification" spec="^0.9.0-beta.2" />
     <plugin name="cordova-plugin-contacts" spec="^3.0.1">
         <variable name="CONTACTS_USAGE_DESCRIPTION" value="Display contact cards" />
     </plugin>
     <edit-config file="*-Info.plist" mode="merge" target="NSContactsUsageDescription">
         <string>Need contacts to display contact cards</string>
     </edit-config>
+    <edit-config file="*-Info.plist" mode="merge" target="NSCameraUsageDescription">
+        <string>Need camera access to take pictures</string>
+    </edit-config>
+    <edit-config file="*-Info.plist" mode="merge" target="NSPhotoLibraryUsageDescription">
+        <string>Need photo library access to get pictures from there</string>
+    </edit-config>
+    <edit-config file="*-Info.plist" mode="merge" target="NSLocationWhenInUseUsageDescription">
+        <string>Need location access to find things nearby</string>
+    </edit-config>
+    <edit-config file="*-Info.plist" mode="merge" target="NSPhotoLibraryAddUsageDescription">
+        <string>Need photo library access to save pictures there</string>
+    </edit-config>
     <plugin name="cordova-sms-plugin" spec="^0.1.11" />
     <plugin name="cordova-call" spec="^1.1.3" />
+    <plugin name="cordova-plugin-camera" spec="^4.0.2" />
+    <plugin name="cordova-plugin-splashscreen" spec="^5.0.2" />
     <engine name="browser" spec="^5.0.3" />
     <engine name="ios" spec="^4.5.4" />
-    <engine name="android" spec="^7.0.0" />
+    <plugin name="cordova-plugin-local-notification" spec="^0.9.0-beta.3" />
 </widget>
 
 
 Plugins: 
 
-cordova-call,cordova-plugin-badge,cordova-plugin-contacts,cordova-plugin-device,cordova-plugin-local-notification,cordova-plugin-whitelist,cordova-sms-plugin
-
-Android platform:
-
-*************************************************************************
-The "android" command is deprecated.
-For manual SDK, AVD, and project management, please use Android Studio.
-For command-line tools, use tools/bin/sdkmanager and tools/bin/avdmanager
-*************************************************************************
-Running /Users/baptiste/Library/Android/sdk/tools/bin/avdmanager list target
-
-Loading local repository...                                                     [=========                              ] 25% Loading local repository...       [=========                              ] 25% Fetch remote repository...        [=========                              ] 25% Fetch remote repository...        [=========                              ] 25% Fetch remote repository...        [=======================================] 100% Fetch remote repository...       Available Android targets:
-----------
-id: 1 or "android-19"
-     Name: Android API 19
-     Type: Platform
-     API level: 19
-     Revision: 4
-----------
-id: 2 or "android-21"
-     Name: Android API 21
-     Type: Platform
-     API level: 21
-     Revision: 2
-----------
-id: 3 or "android-22"
-     Name: Android API 22
-     Type: Platform
-     API level: 22
-     Revision: 2
-----------
-id: 4 or "android-23"
-     Name: Android API 23
-     Type: Platform
-     API level: 23
-     Revision: 3
-----------
-id: 5 or "android-24"
-     Name: Android API 24
-     Type: Platform
-     API level: 24
-     Revision: 2
-----------
-id: 6 or "android-25"
-     Name: Android API 25
-     Type: Platform
-     API level: 25
-     Revision: 3
-----------
-id: 7 or "android-26"
-     Name: Android API 26
-     Type: Platform
-     API level: 26
-     Revision: 2
-----------
-id: 8 or "android-27"
-     Name: Android API 27
-     Type: Platform
-     API level: 27
-     Revision: 1
+cordova-call,cordova-plugin-badge,cordova-plugin-camera,cordova-plugin-contacts,cordova-plugin-device,cordova-plugin-local-notification,cordova-plugin-splashscreen,cordova-plugin-whitelist,cordova-sms-plugin
 
 
 

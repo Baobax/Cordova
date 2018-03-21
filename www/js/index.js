@@ -1,45 +1,100 @@
 var _forward = true;
 var _userContacts, _nbContacts = 0;
+//Pour ne pas prendre en compte le touch si l'utilisateur scroll
+var _dragging = false;
 
 //Cordova events------------------------------------------------
 function initialize() {
-    document.addEventListener("deviceready", onDeviceReady, false);
+    document.addEventListener("deviceready", onDeviceReady);
 }
 
 function onDeviceReady() {
-    document.addEventListener("pause", onPause, false);
-    document.addEventListener("resume", onResume, false);
+    cordova.plugins.notification.local.hasPermission(function (granted) {
+        console.log("Autorisation des notifs : " + granted);
+    });
+
+    if (navigator.userAgent.match(/(iPhone|iPod|iPad)/)) {
+        document.addEventListener("resign", onPause);//pause iOS
+    }
+    else {
+        document.addEventListener("pause", onPause);//pause Android
+    }
+
+    if (navigator.userAgent.match(/(iPhone|iPod|iPad)/)) {
+        document.addEventListener("active", onResume);//resume iOS
+    }
+    else {
+        document.addEventListener("resume", onResume);//resume Android
+    }
+
+    $("body").on("touchstart", function(){
+        _dragging = false;
+    });
+    $("body").on("touchmove", function(){
+        _dragging = true;
+    });
+
+    getContacts();
     $("#top_card").on("touchend", clickAnimateFlipTopCard);
     $(".card").on("touchend", clickAnimateFlipCard);
-    getContacts();
     $("#form_add_contact").on("submit", createContact);
     $("#btn_call").on("touchend", receiveCall);
     $("#btn_sms").on("touchend", sendSms);
     $("#btn_photo").on("touchend", takePhoto);
+    $("#cancel_all").on("touchend", cancelNotifs);
+}
+
+function scheduleNotification() {
+    cordova.plugins.notification.local.schedule({
+        id: 1,
+        title: 'Scheduled with delay',
+        text: '5 sec delay',
+        trigger: { in: 5, unit: "second" },
+        badge: 0,
+        foreground: true
+    });
 }
 
 function onPause() {
+    scheduleNotification();
+    cordova.plugins.notification.local.isScheduled(2, function (scheduled) {
+        if(!scheduled) {
+            cordova.plugins.notification.local.schedule({
+                id: 2,
+                title: 'Scheduled each day',
+                text: '14h00',
+                trigger: { every: { hour: 14, minute: 0 } },
+                badge: 0,
+                foreground: true
+            });
+        }
+    });
     console.log("Pause");
-    /*timeToWait = Math.floor((Math.random() * 2) + 1);
-
-    cordova.plugins.notification.local.schedule({
-        title: 'Nouvelle carte',
-        text: 'Une nouvelle carte a été tirée !',
-        trigger: { in: timeToWait, unit: 'second' },
-        //trigger: {every: {hour: 11, minute: 25}},
-        foreground: true
-    });*/
 }
 
 function onResume() {
+    var details = cordova.plugins.notification.local.launchDetails;
+    if (details) {
+        console.log('Launched by notification with ID ' + details.id);
+    }
+    
+    //Si une notification est prévue alors qu'on revient dans l'application, on l'annule
+    cordova.plugins.notification.local.isScheduled(1, function (scheduled) {
+        if(scheduled) {
+            cordova.plugins.notification.local.cancel(1);
+        }
+    });
     console.log("Resume");
 }
 
 
 //My events------------------------------------------------
 function clickAnimateFlipTopCard() {
+    if (_dragging)
+        return;
+
     var numCard = Math.floor((Math.random() * _nbContacts) + 0);
-    
+
     //Changing front card src
     $(".card .front .small").attr("srcset", "img/card.png");
     $(".card .front .medium").attr("srcset", "img/card.png");
@@ -130,6 +185,9 @@ function showContactInfos(numCard) {
 }
 
 function clickAnimateFlipCard() {
+    if (_dragging)
+        return;
+
     if(_forward) {
         $(".card").transition({rotateY:'180deg', duration: 200});
 
@@ -137,8 +195,8 @@ function clickAnimateFlipCard() {
     }
     else {
         $(".card")
-        .transition({scale:0, duration: 200})
-        .transition({rotateY:'0deg', duration: 20});
+            .transition({scale:0, duration: 200})
+            .transition({rotateY:'0deg', duration: 20});
 
         _forward = true;
     }
@@ -208,6 +266,9 @@ function successSendSms() {
 }
 
 function sendSms() {
+    if (_dragging)
+        return;
+
     if($('#numberTxt').val().toString() != "" && $('#messageTxt').val() != "") {
         var number = $('#numberTxt').val().toString(); /* iOS: ensure number is actually a string */
         var message = $('#messageTxt').val();
@@ -226,6 +287,13 @@ function sendSms() {
     }
 }
 
+function cancelNotifs() {
+    if (_dragging)
+        return;
+
+    cordova.plugins.notification.local.cancelAll();
+}
+
 function failPhoto(message) {
     if (message != "No Image Selected") {
         alert('Failed because: ' + message);
@@ -237,12 +305,16 @@ function successPhoto(imageURI) {
 }
 
 function takePhoto() {
+    if (_dragging)
+        return;
+
     var options = {
         // Some common settings are 20, 50, and 100
         quality: 50,
         destinationType: Camera.DestinationType.FILE_URI,
         encodingType: Camera.EncodingType.JPEG,
         mediaType: Camera.MediaType.PICTURE,
+        saveToPhotoAlbum: true,
         correctOrientation: true //Corrects Android orientation quirks
     }
 
