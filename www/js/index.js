@@ -1,3 +1,4 @@
+//Focus paquet pour éviter de pouvoir cliquer sur le paquet pendant qu'une carte est sortie
 var _forward = true;
 var _userContacts, _nbContacts = 0;
 //Pour ne pas prendre en compte le touch si l'utilisateur scroll
@@ -35,38 +36,59 @@ function onDeviceReady() {
     });
 
     getContacts();
-    $("#top_card").on("touchend", clickAnimateFlipTopCard);
-    $(".card").on("touchend", clickAnimateFlipCard);
+    $("#top_card").on("touchend", clickAnimateTopCard);
     $("#form_add_contact").on("submit", createContact);
     $("#btn_call").on("touchend", receiveCall);
     $("#btn_sms").on("touchend", sendSms);
     $("#btn_photo").on("touchend", takePhoto);
     $("#cancel_all").on("touchend", cancelNotifs);
+
+    //À chaque lancement d'app, on réinitialise la pastille de notifications
+    cordova.plugins.notification.badge.configure({ autoClear: true });
+
+    cordova.plugins.notification.local.on("trigger", function (notification) {
+        cordova.plugins.notification.badge.increase(1, function (badge) {});
+    });
 }
 
 function scheduleNotification() {
-    cordova.plugins.notification.local.schedule({
-        id: 1,
-        title: 'Scheduled with delay',
-        text: '5 sec delay',
-        trigger: { in: 5, unit: "second" },
-        badge: 0,
-        foreground: true
-    });
+    cordova.plugins.notification.local.schedule(
+        {
+            id: 1,
+            title: 'Scheduled with delay',
+            text: '5 sec delay',
+            trigger: { in: 5, unit: "second" },
+            foreground: true
+        }
+    );
 }
 
 function onPause() {
     scheduleNotification();
     cordova.plugins.notification.local.isScheduled(2, function (scheduled) {
         if(!scheduled) {
-            cordova.plugins.notification.local.schedule({
-                id: 2,
-                title: 'Scheduled each day',
-                text: '14h00',
-                trigger: { every: { hour: 14, minute: 0 } },
-                badge: 0,
-                foreground: true
-            });
+            cordova.plugins.notification.local.schedule(
+                {
+                    id: 2,
+                    title: 'Scheduled each day 1',
+                    text: '9h20',
+                    trigger: { every: { hour: 9, minute: 20 } },
+                    foreground: true
+                }
+            );
+        }
+    });
+    cordova.plugins.notification.local.isScheduled(3, function (scheduled) {
+        if(!scheduled) {
+            cordova.plugins.notification.local.schedule(
+                {
+                    id: 3,
+                    title: 'Scheduled each day 2',
+                    text: '13h40',
+                    trigger: { every: { hour: 13, minute: 40 } },
+                    foreground: true
+                }
+            );
         }
     });
     console.log("Pause");
@@ -77,7 +99,7 @@ function onResume() {
     if (details) {
         console.log('Launched by notification with ID ' + details.id);
     }
-    
+
     //Si une notification est prévue alors qu'on revient dans l'application, on l'annule
     cordova.plugins.notification.local.isScheduled(1, function (scheduled) {
         if(scheduled) {
@@ -89,9 +111,11 @@ function onResume() {
 
 
 //My events------------------------------------------------
-function clickAnimateFlipTopCard() {
+function clickAnimateTopCard() {
     if (_dragging)
         return;
+
+    $("#top_card").unbind("touchend");
 
     var numCard = Math.floor((Math.random() * _nbContacts) + 0);
 
@@ -107,7 +131,9 @@ function clickAnimateFlipTopCard() {
 
     showContactInfos(numCard);
 
-    $(".card").transition({scale:1, duration: 200});
+    $(".card").transition({scale:1, duration: 200}, function() {
+        $(".card .front").on("touchend", clickAnimateFrontCard);
+    });
 }
 
 function showContactInfos(numCard) {
@@ -184,22 +210,44 @@ function showContactInfos(numCard) {
     }
 }
 
-function clickAnimateFlipCard() {
+function clickAnimateFrontCard() {
     if (_dragging)
         return;
 
-    if(_forward) {
-        $(".card").transition({rotateY:'180deg', duration: 200});
+    $(".card .front").unbind("touchend");
 
-        _forward = false;
-    }
-    else {
-        $(".card")
-            .transition({scale:0, duration: 200})
-            .transition({rotateY:'0deg', duration: 20});
+    $(".card").transition({rotateY:'180deg', duration: 200},
+                          function() {
+        $(".card .back").on("touchend", clickAnimateBackCard);
+    });
+}
 
-        _forward = true;
-    }
+function clickAnimateBackCard() {
+    if (_dragging)
+        return;
+    
+    $(".card .back").unbind("touchend");
+
+    $(".card")
+        .transition({scale:0, duration: 200})
+        .transition({rotateY:'0deg', duration: 20},
+                    function() {
+        //Changing front card src
+        $(".card .front .small").attr("srcset", "");
+        $(".card .front .medium").attr("srcset", "");
+        $(".card .front img").attr("src", "");
+
+        //Changing back card src
+        $(".card .back .small").attr("srcset", "");
+        $(".card .back .medium").attr("srcset", "");
+        $(".card .back img").attr("src", "");
+
+        $(".info_contact_front").empty();
+        $(".info_contact_back").empty();
+
+
+        $("#top_card").on("touchend", clickAnimateTopCard);
+    });
 }
 
 function onSuccess(contacts) {

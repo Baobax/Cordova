@@ -34,7 +34,8 @@
             "cordova-call": {},
             "cordova-plugin-camera": {},
             "cordova-plugin-splashscreen": {},
-            "cordova-plugin-local-notification": {}
+            "cordova-plugin-local-notification": {},
+            "cordova-plugin-badge": {}
         },
         "platforms": [
             "browser",
