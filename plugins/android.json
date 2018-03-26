@@ -19,6 +19,9 @@
     "cordova-plugin-contacts": {
       "PACKAGE_NAME": "io.cordova.hellocordova"
     },
+    "cordova-plugin-file": {
+      "PACKAGE_NAME": "io.cordova.hellocordova"
+    },
     "cordova-plugin-local-notification": {
       "PACKAGE_NAME": "io.cordova.hellocordova"
     },

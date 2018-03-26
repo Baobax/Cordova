@@ -1,10 +1,11 @@
-//Focus paquet pour éviter de pouvoir cliquer sur le paquet pendant qu'une carte est sortie
-var _forward = true;
-var _userContacts, _nbContacts = 0;
-//Pour ne pas prendre en compte le touch si l'utilisateur scroll
-var _dragging = false;
+const NOTIF_1 = 1, NOTIF_2 = 2, NOTIF_3 = 3;
 
-//Cordova events------------------------------------------------
+//Pour ne pas prendre en compte le touch si l'utilisateur déplace son doigt
+var _dragging = false;
+var _userContacts, _nbContacts = 0;
+
+
+//Cordova events---------------------------------------------------------
 function initialize() {
     document.addEventListener("deviceready", onDeviceReady);
 }
@@ -49,12 +50,15 @@ function onDeviceReady() {
     cordova.plugins.notification.local.on("trigger", function (notification) {
         cordova.plugins.notification.badge.increase(1, function (badge) {});
     });
+    cordova.plugins.notification.local.on("clear", function (notification) {
+        cordova.plugins.notification.badge.decrease(1, function (badge) {});
+    });
 }
 
 function scheduleNotification() {
     cordova.plugins.notification.local.schedule(
         {
-            id: 1,
+            id: NOTIF_1,
             title: 'Scheduled with delay',
             text: '5 sec delay',
             trigger: { in: 5, unit: "second" },
@@ -65,12 +69,13 @@ function scheduleNotification() {
 
 function onPause() {
     scheduleNotification();
-    cordova.plugins.notification.local.isScheduled(2, function (scheduled) {
+    cordova.plugins.notification.local.isScheduled(NOTIF_2, function (scheduled) {
         if(!scheduled) {
+            console.log("Notif 9h20 scheduled");
             cordova.plugins.notification.local.schedule(
                 {
-                    id: 2,
-                    title: 'Scheduled each day 1',
+                    id: NOTIF_2,
+                    title: 'Scheduled each day',
                     text: '9h20',
                     trigger: { every: { hour: 9, minute: 20 } },
                     foreground: true
@@ -78,12 +83,13 @@ function onPause() {
             );
         }
     });
-    cordova.plugins.notification.local.isScheduled(3, function (scheduled) {
+    cordova.plugins.notification.local.isScheduled(NOTIF_3, function (scheduled) {
         if(!scheduled) {
+            console.log("Notif 13h40 scheduled");
             cordova.plugins.notification.local.schedule(
                 {
-                    id: 3,
-                    title: 'Scheduled each day 2',
+                    id: NOTIF_3,
+                    title: 'Scheduled each day',
                     text: '13h40',
                     trigger: { every: { hour: 13, minute: 40 } },
                     foreground: true
@@ -95,22 +101,18 @@ function onPause() {
 }
 
 function onResume() {
-    var details = cordova.plugins.notification.local.launchDetails;
-    if (details) {
-        console.log('Launched by notification with ID ' + details.id);
-    }
-
     //Si une notification est prévue alors qu'on revient dans l'application, on l'annule
-    cordova.plugins.notification.local.isScheduled(1, function (scheduled) {
+    cordova.plugins.notification.local.isScheduled(NOTIF_1, function (scheduled) {
         if(scheduled) {
-            cordova.plugins.notification.local.cancel(1);
+            cordova.plugins.notification.local.cancel(NOTIF_1);
         }
     });
     console.log("Resume");
 }
 
 
-//My events------------------------------------------------
+
+//My events-----------------------------------------------------
 function clickAnimateTopCard() {
     if (_dragging)
         return;
@@ -225,7 +227,7 @@ function clickAnimateFrontCard() {
 function clickAnimateBackCard() {
     if (_dragging)
         return;
-    
+
     $(".card .back").unbind("touchend");
 
     $(".card")
