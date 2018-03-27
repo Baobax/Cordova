@@ -1,0 +1,24 @@
+{
+    "languageSpecifications": [
+        {
+            "menu1": "Contact cards",
+            "menu2": "Create a contact",
+            "menu3": "Camera and notifs",
+            "name": "Name",
+            "phone_number": "Phone number",
+            "email": "eMail",
+            "address": "Address",
+            "website": "Website",
+            "receive_call": "Receive a call",
+            "send_sms": "Send an SMS",
+            "message": "Message",
+            "send": "Send",
+            "create_contact": "Create a contact",
+            "first_name": "First name",
+            "create": "Create",
+            "cancel_notifs": "Cancel all notifications",
+            "take_photo": "Take a photo",
+            "no_contact": "You don't have any contact"
+        }
+    ]
+}

@@ -1,0 +1,24 @@
+{
+    "languageSpecifications": [
+        {
+            "menu1": "Cartes de contacts",
+            "menu2": "Créer un contact",
+            "menu3": "Caméra et notifs",
+            "name": "Nom",
+            "phone_number": "Numéro de téléphone",
+            "email": "eMail",
+            "address": "Adresse",
+            "website": "Site web",
+            "receive_call": "Recevoir un appel",
+            "send_sms": "Envoyer un SMS",
+            "message": "Message",
+            "send": "Envoyer",
+            "create_contact": "Créer un contact",
+            "first_name": "Prénom",
+            "create": "Créer",
+            "cancel_notifs": "Annuler les notifications",
+            "take_photo": "Prendre une photo",
+            "no_contact": "Vous n'avez aucun contact"
+        }
+    ]
+}

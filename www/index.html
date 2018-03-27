@@ -17,9 +17,9 @@
             <div data-role="header">
                 <div data-role="navbar">
                     <ul>
-                        <li><a href="#" class="ui-btn-active ui-state-persist">Contact cards</a></li>
-                        <li><a href="#add_a_contact">Créer un contact</a></li>
-                        <li><a href="#show_camera">Caméra et notifs</a></li>
+                        <li><a href="#" class="ui-btn-active ui-state-persist languagespecificHTML" data-text="menu1"></a></li>
+                        <li><a href="#add_a_contact" class="languagespecificHTML" data-text="menu2"></a></li>
+                        <li><a href="#show_camera" class="languagespecificHTML" data-text="menu3"></a></li>
                     </ul>
                 </div>
             </div>
@@ -79,42 +79,42 @@
             <div data-role="header">
                 <div data-role="navbar">
                     <ul>
-                        <li><a href="#contact_cards">Contact cards</a></li>
-                        <li><a href="#" class="ui-btn-active ui-state-persist">Créer un contact</a></li>
-                        <li><a href="#show_camera">Caméra et notifs</a></li>
+                        <li><a href="#contact_cards" class="languagespecificHTML" data-text="menu1"></a></li>
+                        <li><a href="#" class="ui-btn-active ui-state-persist languagespecificHTML" data-text="menu2"></a></li>
+                        <li><a href="#show_camera" class="languagespecificHTML" data-text="menu3"></a></li>
                     </ul>
                 </div>
             </div>
             <div role="main" class="ui-content">
-                <button id="btn_call">Recevoir un appel</button>
+                <button id="btn_call" class="languagespecificHTML" data-text="receive_call"></button>
 
                 <hr>
 
-                <h2>Envoyer un SMS</h2>
-                <input id="numberTxt" placeholder="Enter mobile number" value="" type="tel" />
-                <textarea id="messageTxt" placeholder="Enter message"></textarea>
-                <input id="btn_sms" type="button" value="Send SMS" />
+                <h2 class="languagespecificHTML" data-text="send_sms"></h2>
+                <input id="numberTxt" class="languageSpecificPlaceholder" data-text="phone_number" type="tel" />
+                <textarea id="messageTxt" class="languageSpecificPlaceholder" data-text="message" ></textarea>
+                <input id="btn_sms" type="button" class="languageSpecificValue" data-text="send" />
 
                 <hr>
 
                 <form id="form_add_contact" action="#add_a_contact" method="get" data-ajax="false">
-                    <h2>Créer un contact</h2>
+                    <h2 class="languagespecificHTML" data-text="create_contact"></h2>
                     <div class="validation_errors">
                     </div>
                     <fieldset data-role="fieldcontain">
-                        <label for="nom">Nom :</label>
+                        <label for="nom" class="languagespecificHTML" data-text="name"></label>
                         <input type="text" name="nom" id="nom" value="">
                     </fieldset>
                     <fieldset data-role="fieldcontain">
-                        <label for="prenom">Prénom :</label>
+                        <label for="prenom" class="languagespecificHTML" data-text="first_name"></label>
                         <input type="text" name="prenom" id="prenom" value="">
                     </fieldset>
                     <fieldset data-role="fieldcontain">
-                        <label for="numTel">Numéro de téléphone :</label>
+                        <label for="numTel" class="languagespecificHTML" data-text="phone_number"></label>
                         <input type="tel" name="numTel" id="numTel" value="">
                     </fieldset>
 
-                    <input type="submit" value="Créer">
+                    <input type="submit" class="languageSpecificValue" data-text="create">
                 </form>
 
                 <hr>
@@ -132,18 +132,18 @@
             <div data-role="header">
                 <div data-role="navbar">
                     <ul>
-                        <li><a href="#contact_cards">Contact cards</a></li>
-                        <li><a href="#add_a_contact">Créer un contact</a></li>
-                        <li><a href="#" class="ui-btn-active ui-state-persist">Caméra et notifs</a></li>
+                        <li><a href="#contact_cards" class="languagespecificHTML" data-text="menu1"></a></li>
+                        <li><a href="#add_a_contact" class="languagespecificHTML" data-text="menu2"></a></li>
+                        <li><a href="#" class="ui-btn-active ui-state-persist languagespecificHTML" data-text="menu3"></a></li>
                     </ul>
                 </div>
             </div>
             <div role="main" class="ui-content">
-                <button id="cancel_all">Cancel all notifications</button>
+                <button id="cancel_all" class="languagespecificHTML" data-text="cancel_notifs"></button>
 
                 <hr>
 
-                <button id="btn_photo">Prendre une photo</button>
+                <button id="btn_photo" class="languagespecificHTML" data-text="take_photo"></button>
 
                 <img id="photo" style="width: 100%;" src="">
             </div>

@@ -4,13 +4,62 @@ const NOTIF_1 = 1, NOTIF_2 = 2, NOTIF_3 = 3;
 var _dragging = false;
 var _userContacts, _nbContacts = 0;
 
+//Language
+var languageStrings = null;
+var languageStringsURL = "";
+var frenchlanguageStringsURL = "i18n/fr/strings.json";
+var englishlanguageStringsURL = "i18n/en/strings.json";
 
 //Cordova events---------------------------------------------------------
 function initialize() {
     document.addEventListener("deviceready", onDeviceReady);
 }
 
+function getSpecificLanguageString(key) {
+    value = languageStrings.languageSpecifications[0][key];
+    return value;
+}
+
+function getLanguageStrings(urlToHit,successCallback){
+    $.ajax({
+        type: "POST",
+        url: urlToHit,
+        timeout: 30000 ,
+    }).done(function(msg) {
+        successCallback(msg);
+    }).fail(function(jqXHR, textStatus, errorThrown){
+        alert("Internal Server Error");
+    });
+}
+
+function language() {
+    if((navigator.language == "fr-FR")){
+        languageStringsURL = frenchlanguageStringsURL;
+    }
+    else{
+        //Default English
+        languageStringsURL = englishlanguageStringsURL;
+    }
+    //Make an ajax call to strings.json files
+    getLanguageStrings(languageStringsURL,function(msg){
+        languageStrings = JSON.parse(msg);
+
+        $(".languagespecificHTML").each(function(){
+            $(this).html(languageStrings.languageSpecifications[0][$(this).data("text")]);
+        });
+        $(".languageSpecificPlaceholder").each(function(){
+            $(this).attr("placeholder",languageStrings.languageSpecifications[0][$(this).data("text")]);
+        });
+        $(".languageSpecificValue").each(function(){
+            $(this).attr("value",languageStrings.languageSpecifications[0][$(this).data("text")]);
+        });
+    });
+}
+
 function onDeviceReady() {
+    language();
+
+
     cordova.plugins.notification.local.hasPermission(function (granted) {
         console.log("Autorisation des notifs : " + granted);
     });
@@ -48,10 +97,10 @@ function onDeviceReady() {
     cordova.plugins.notification.badge.configure({ autoClear: true });
 
     cordova.plugins.notification.local.on("trigger", function (notification) {
-        cordova.plugins.notification.badge.increase(1, function (badge) {});
+        cordova.plugins.notification.badge.increase(1);
     });
     cordova.plugins.notification.local.on("clear", function (notification) {
-        cordova.plugins.notification.badge.decrease(1, function (badge) {});
+        cordova.plugins.notification.badge.decrease(1);
     });
 }
 
@@ -151,32 +200,32 @@ function showContactInfos(numCard) {
         }
 
         if((_userContacts[numCard].name.formatted) != null) {
-            frontCard += "<p><b>Nom</b><br>" + _userContacts[numCard].name.formatted + "</p>";
+            frontCard += "<p><b>" + getSpecificLanguageString("name") + "</b><br>" + _userContacts[numCard].name.formatted + "</p>";
         }
         else {
-            frontCard += "<p><b>Nom</b><br>-</p>";
+            frontCard += "<p><b>" + getSpecificLanguageString("name") + "</b><br>-</p>";
         }
 
         if((_userContacts[numCard].phoneNumbers) != null) {
-            frontCard += "<p><b>Numéro(s) de téléphone</b><br>";
+            frontCard += "<p><b>" + getSpecificLanguageString("phone_number") + "</b><br>";
             (_userContacts[numCard].phoneNumbers).forEach(function(element) {
                 frontCard += element.value + "<br>";
             });
             frontCard += "</p>";
         }
         else {
-            frontCard += "<p><b>Numéro(s) de téléphone</b><br>-</p>";
+            frontCard += "<p><b>" + getSpecificLanguageString("phone_number") + "</b><br>-</p>";
         }
 
         if((_userContacts[numCard].emails) != null) {
-            frontCard += "<p><b>eMail(s)</b><br>";
+            frontCard += "<p><b>" + getSpecificLanguageString("email") + "</b><br>";
             (_userContacts[numCard].emails).forEach(function(element) {
                 frontCard += element.value + "<br>";
             });
             frontCard += "</p>";
         }
         else {
-            frontCard += "<p><b>eMail(s)</b><br>-</p>";
+            frontCard += "<p><b>" + getSpecificLanguageString("email") + "</b><br>-</p>";
         }
 
         $(".info_contact_front").html(frontCard);
@@ -184,31 +233,31 @@ function showContactInfos(numCard) {
 
         //Displaying contact informations on the back of the card
         if((_userContacts[numCard].addresses) != null) {
-            backCard += "<p><b>Adresse(s)</b><br>";
+            backCard += "<p><b>" + getSpecificLanguageString("address") + "</b><br>";
             (_userContacts[numCard].addresses).forEach(function(element) {
                 backCard += element.streetAddress + ", " + element.locality + "<br>";
             });
             backCard += "</p>";
         }
         else {
-            backCard += "<p><b>Adresse(s)</b><br>-</p>";
+            backCard += "<p><b>" + getSpecificLanguageString("address") + "</b><br>-</p>";
         }
 
         if((_userContacts[numCard].urls) != null) {
-            backCard += "<p><b>Site(s) web</b><br>";
+            backCard += "<p><b>" + getSpecificLanguageString("website") + "</b><br>";
             (_userContacts[numCard].urls).forEach(function(element) {
                 backCard += element.value + "<br>";
             });
             backCard += "</p>";
         }
         else {
-            backCard += "<p><b>Site(s) web</b><br>-</p>";
+            backCard += "<p><b>" + getSpecificLanguageString("website") + "</b><br>-</p>";
         }
 
         $(".info_contact_back").html(backCard);
     }
     else {
-        $(".info_contact_front").html("<p><b>Vous n'avez aucun contact</b></p>");
+        $(".info_contact_front").html("<p><b>" + getSpecificLanguageString("no_contact") + "</b></p>");
     }
 }
 
