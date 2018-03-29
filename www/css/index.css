@@ -37,6 +37,8 @@ html, body { /** for a container in all the screen */
 
 #c1 img, #c2 img, #c3 img, #c4 img, #top_card img {
     width: 100%;
+    border: solid 1px black;
+    border-radius: 5px;
 }
 
 /*--Pour pas que le paquet soit plus grand que l'écran en landscape--*/

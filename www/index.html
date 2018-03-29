@@ -15,6 +15,9 @@
     <body>
         <div data-role="page" class="container" id="contact_cards">
             <div data-role="header">
+                <div>
+                    <a href="tests/index.html" rel="external" data-ajax="false">Tests</a>
+                </div>
                 <div data-role="navbar">
                     <ul>
                         <li><a href="#" class="ui-btn-active ui-state-persist languagespecificHTML" data-text="menu1"></a></li>
@@ -23,7 +26,7 @@
                     </ul>
                 </div>
             </div>
-            <div role="main" class="ui-content">
+            <div data-role="content">
                 <div class="paquet">
                     <picture id="c1">
                         <source media="(min-width: 650px)" srcset="img/card_back.png"/>
@@ -85,7 +88,7 @@
                     </ul>
                 </div>
             </div>
-            <div role="main" class="ui-content">
+            <div data-role="content">
                 <button id="btn_call" class="languagespecificHTML" data-text="receive_call"></button>
 
                 <hr>
@@ -138,7 +141,7 @@
                     </ul>
                 </div>
             </div>
-            <div role="main" class="ui-content">
+            <div data-role="content">
                 <button id="cancel_all" class="languagespecificHTML" data-text="cancel_notifs"></button>
 
                 <hr>
@@ -149,9 +152,28 @@
             </div>
         </div>
 
-        <script src="js/jquery-1.11.1.min.js"></script>
-        <script src="js/jquery.mobile-1.4.5.min.js"></script>
-        <script src="js/jquery.transit.min.js"></script>
+        <!-- /////////////////////////////////////////////////////////////////////////////////// -->
+
+        <div data-role="page" id="unit_tests">
+            <div data-role="header">
+                <link rel="stylesheet" href="tests/qunit-2.6.0.css">
+
+                <a href="#contact_cards">Retour</a>
+            </div>
+            <div data-role="content">
+                <div id="qunit"></div>
+                <div id="qunit-fixture"></div>
+
+                <script src="tests/qunit-2.6.0.js"></script>
+                <script src="tests/tests.js"></script>
+            </div>
+        </div>
+
+        <!-- /////////////////////////////////////////////////////////////////////////////////// -->
+
+        <script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
+        <script type="text/javascript" src="js/jquery.mobile-1.4.5.min.js"></script>
+        <script type="text/javascript" src="js/jquery.transit.min.js"></script>
         <script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript" src="js/index.js"></script>
     </body>

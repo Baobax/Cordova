@@ -11,9 +11,8 @@ var frenchlanguageStringsURL = "i18n/fr/strings.json";
 var englishlanguageStringsURL = "i18n/en/strings.json";
 
 //Cordova events---------------------------------------------------------
-function initialize() {
-    document.addEventListener("deviceready", onDeviceReady);
-}
+document.addEventListener("deviceready", onDeviceReady);
+
 
 function getSpecificLanguageString(key) {
     value = languageStrings.languageSpecifications[0][key];
@@ -419,5 +418,3 @@ function takePhoto() {
 
     navigator.camera.getPicture(successPhoto, failPhoto, options);
 }
-
-initialize();
