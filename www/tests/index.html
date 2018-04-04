@@ -1,27 +1,16 @@
-<!DOCTYPE html>
-<html lang="fr">
-    <head>
-        <meta charset="utf-8">
+<div data-role="page" class="container" id="tests">
+    <link rel="stylesheet" href="qunit-2.6.0.css">
 
-        <link rel="stylesheet" href="qunit-2.6.0.css">
-        <link rel="stylesheet" type="text/css" href="../css/index.css">
-        <title>Tests unitaires</title>
-    </head>
-    <body>
-        <div>
-            <div>
-                <a href="../index.html" rel="external" data-ajax="false">Retour</a>
-            </div>
-            <div>
-                <div id="qunit"></div>
-                <div id="qunit-fixture"></div>
-            </div>
+    <div data-role="header">
+        <div class="navbar" data-role="navbar">
+            <a href="../index.html" rel="external" data-ajax="false">Retour</a>
         </div>
-        <script type="text/javascript" src="../js/jquery-1.11.1.min.js"></script>
-        <script type="text/javascript" src="../js/jquery.transit.min.js"></script>
-        <script type="text/javascript" src="qunit-2.6.0.js"></script>
-        <script type="text/javascript" src="../cordova.js"></script>
-        <script type="text/javascript" src="../js/index.js"></script>
-        <script type="text/javascript" src="tests.js"></script>
-    </body>
-</html>
+    </div>
+    <div data-role="content">
+        <div id="qunit"></div>
+        <div id="qunit-fixture"></div>
+    </div>
+
+    <script type="text/javascript" src="qunit-2.6.0.js"></script>
+    <script type="text/javascript" src="tests.js"></script>
+</div>

@@ -8,164 +8,176 @@
         <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
 
         <link rel="stylesheet" type="text/css" href="css/jquery.mobile-1.4.5.min.css">
+        <link rel="stylesheet" type="text/css" href="css/fontawesome-all.css">
 
         <link rel="stylesheet" type="text/css" href="css/index.css">
         <title>Hello World</title>
     </head>
     <body>
-        <div data-role="page" class="container" id="contact_cards">
-            <div data-role="header">
-                <div>
-                    <a href="tests/index.html" rel="external" data-ajax="false">Tests</a>
-                </div>
-                <div data-role="navbar">
+        <div data-role="page" class="container" id="call">
+            <div data-role="header" data-position="fixed">
+                <div class="navbar" data-role="navbar">
+                    <div>
+                        <table style="width: 100%">
+                            <tr>
+                                <td style="width: 50%">Test Téléphone</td>
+                                <td style="width: 50%; text-align: right;"><a href="tests/index.html">Tests</a></td>
+                            </tr>
+                        </table>
+                    </div>
                     <ul>
-                        <li><a href="#" class="ui-btn-active ui-state-persist languagespecificHTML" data-text="menu1"></a></li>
-                        <li><a href="#add_a_contact" class="languagespecificHTML" data-text="menu2"></a></li>
-                        <li><a href="#show_camera" class="languagespecificHTML" data-text="menu3"></a></li>
+                        <li><a href="#" class="ui-btn-active ui-state-persist"><i class="fa fa-2x fa-phone"></i></a></li>
+                        <li><a href="#contacts"><i class="fa fa-2x fa-address-book"></i></a></li>
+                        <li><a href="#sms"><i class="fa fa-2x fa-comments"></i></a></li>
                     </ul>
                 </div>
             </div>
             <div data-role="content">
-                <div class="paquet">
-                    <picture id="c1">
-                        <source media="(min-width: 650px)" srcset="img/card_back.png"/>
-                        <source media="(min-width: 465px)" srcset="img/card_back.png"/>
-                        <img src="img/card_back.png">
-                    </picture>
-                    <picture id="c2">
-                        <source media="(min-width: 650px)" srcset="img/card_back.png"/>
-                        <source media="(min-width: 465px)" srcset="img/card_back.png"/>
-                        <img src="img/card_back.png">
-                    </picture>
-                    <picture id="c3">
-                        <source media="(min-width: 650px)" srcset="img/card_back.png"/>
-                        <source media="(min-width: 465px)" srcset="img/card_back.png"/>
-                        <img src="img/card_back.png">
-                    </picture>
-                    <picture id="c4">
-                        <source media="(min-width: 650px)" srcset="img/card_back.png"/>
-                        <source media="(min-width: 465px)" srcset="img/card_back.png"/>
-                        <img src="img/card_back.png">
-                    </picture>
-                    <picture id="top_card">
-                        <source media="(min-width: 650px)" srcset="img/card_back.png"/>
-                        <source  media="(min-width: 465px)" srcset="img/card_back.png"/>
-                        <img src="img/card_back.png">
-                    </picture>
-                </div>
-                <div class="card">
-                    <picture class="front">
-                        <source class="small" media="(min-width: 650px)" srcset=""/>
-                        <source class="medium" media="(min-width: 465px)" srcset=""/>
-                        <img src="" alt="Front card">
-                        <div class="info_contact_front">
+                <h2 class="languagespecificHTML" data-text="make_a_call"></h2>
+                <form id="form_send_call">
+                    <input id="number_to_call" class="languageSpecificPlaceholder" data-text="phone_number" type="tel" required>
+                    <button type="submit" class="languagespecificHTML" data-text="send_call"></button>
+                </form>
 
-                        </div>
-                    </picture>
+                <br><hr><br>
 
-                    <picture class="back">
-                        <source class="small" media="(min-width: 650px)" srcset=""/>
-                        <source class="medium" media="(min-width: 465px)" srcset=""/>
-                        <img src="" alt="Back card">
-                        <div class="info_contact_back">
-
-                        </div>
-                    </picture>
-                </div>
+                <button id="btn_receive_call" class="languagespecificHTML" data-text="receive_call"></button>
             </div>
         </div>
 
         <!-- /////////////////////////////////////////////////////////////////////////////////// -->
 
-        <div data-role="page" id="add_a_contact">
-            <div data-role="header">
-                <div data-role="navbar">
+        <div data-role="page" class="container" id="contacts">
+            <div data-role="header" data-position="fixed">
+                <div class="navbar" data-role="navbar">
+                    <div>
+                        <table style="width: 100%">
+                            <tr>
+                                <td style="width: 50%">Test Téléphone</td>
+                                <td style="width: 50%; text-align: right;"><a href="tests/index.html">Tests</a></td>
+                            </tr>
+                        </table>
+                    </div>
                     <ul>
-                        <li><a href="#contact_cards" class="languagespecificHTML" data-text="menu1"></a></li>
-                        <li><a href="#" class="ui-btn-active ui-state-persist languagespecificHTML" data-text="menu2"></a></li>
-                        <li><a href="#show_camera" class="languagespecificHTML" data-text="menu3"></a></li>
+                        <li><a href="#call"><i class="fa fa-2x fa-phone"></i></a></li>
+                        <li><a href="#" class="ui-btn-active ui-state-persist"><i class="fa fa-2x fa-address-book"></i></a></li>
+                        <li><a href="#sms"><i class="fa fa-2x fa-comments"></i></a></li>
                     </ul>
                 </div>
             </div>
             <div data-role="content">
-                <button id="btn_call" class="languagespecificHTML" data-text="receive_call"></button>
+                <div data-role="collapsible" class="ui-collapsible ui-collapsible-inset ui-corner-all">
+                    <h2 class="ui-collapsible-heading">
+                        <a style="text-decoration: none; color: black;" href="#" class="ui-collapsible-heading-toggle ui-fullsize ui-btn-icon-left ui-btn-up-c" data-corners="false" data-shadow="false" data-iconshadow="true" data-wrapperels="span" data-icon="plus" data-iconpos="left" data-theme="c" data-mini="false">
+                            <span class="ui-btn-inner">
+                                <span class="ui-btn-text">
+                                    <span class="languagespecificHTML" data-text="create_contact"></span>
+                                    <span class="ui-collapsible-heading-status"> click to expand contents</span>
+                                </span>
+                                <span class="ui-icon ui-icon-shadow ui-icon-plus">&nbsp;</span>
+                            </span>
+                        </a>
+                    </h2>
+                    <div class="ui-collapsible-content" aria-hidden="false">
+                        <form id="form_add_contact" action="#contacts" method="get" data-ajax="false">
+                            <div class="validation_errors">
+                            </div>
+                            <fieldset data-role="fieldcontain">
+                                <label for="nom" class="languagespecificHTML" data-text="name"></label>
+                                <input type="text" name="nom" id="nom" value="" required>
+                            </fieldset>
+                            <fieldset data-role="fieldcontain">
+                                <label for="prenom" class="languagespecificHTML" data-text="first_name"></label>
+                                <input type="text" name="prenom" id="prenom" value="" required>
+                            </fieldset>
+                            <fieldset data-role="fieldcontain">
+                                <label for="numTel" class="languagespecificHTML" data-text="phone_number"></label>
+                                <input type="tel" name="numTel" id="numTel" value="" required>
+                            </fieldset>
 
-                <hr>
+                            <table style="width: 100%">
+                                <tr>
+                                    <td style="width: 50%">
+                                        <input type="reset" class="languageSpecificValue" data-text="reset">
+                                    </td>
+                                    <td style="width: 50%">
+                                        <input type="submit" class="languageSpecificValue" data-text="create">
+                                    </td>
+                                </tr>
+                            </table>
+                        </form>
+                    </div>
+                </div>
 
+
+                <br><hr><br>
+
+                <h2 class="languagespecificHTML" data-text="contacts"></h2>
+                <div id="display_contacts">
+                </div>
+
+                <!--
+<a href="tel:">Test tel</a><br>
+<a href="sms:">Test sms</a><br>
+<a href="geo:">Test geo</a><br>
+<a href="http://www.google.fr/">Test web</a>
+-->
+            </div>
+        </div>
+
+        <!-- /////////////////////////////////////////////////////////////////////////////////// -->
+
+        <div data-role="page" class="container" id="sms">
+            <div data-role="header" data-position="fixed">
+                <div class="navbar" data-role="navbar">
+                    <div>
+                        <table style="width: 100%">
+                            <tr>
+                                <td style="width: 50%">Test Téléphone</td>
+                                <td style="width: 50%; text-align: right;"><a href="tests/index.html">Tests</a></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <ul>
+                        <li><a href="#call"><i class="fa fa-2x fa-phone"></i></a></li>
+                        <li><a href="#contacts"><i class="fa fa-2x fa-address-book"></i></a></li>
+                        <li><a href="#" class="ui-btn-active ui-state-persist"><i class="fa fa-2x fa-comments"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+            <div data-role="content">
                 <h2 class="languagespecificHTML" data-text="send_sms"></h2>
                 <input id="numberTxt" class="languageSpecificPlaceholder" data-text="phone_number" type="tel" />
                 <textarea id="messageTxt" class="languageSpecificPlaceholder" data-text="message" ></textarea>
                 <input id="btn_sms" type="button" class="languageSpecificValue" data-text="send" />
-
-                <hr>
-
-                <form id="form_add_contact" action="#add_a_contact" method="get" data-ajax="false">
-                    <h2 class="languagespecificHTML" data-text="create_contact"></h2>
-                    <div class="validation_errors">
-                    </div>
-                    <fieldset data-role="fieldcontain">
-                        <label for="nom" class="languagespecificHTML" data-text="name"></label>
-                        <input type="text" name="nom" id="nom" value="">
-                    </fieldset>
-                    <fieldset data-role="fieldcontain">
-                        <label for="prenom" class="languagespecificHTML" data-text="first_name"></label>
-                        <input type="text" name="prenom" id="prenom" value="">
-                    </fieldset>
-                    <fieldset data-role="fieldcontain">
-                        <label for="numTel" class="languagespecificHTML" data-text="phone_number"></label>
-                        <input type="tel" name="numTel" id="numTel" value="">
-                    </fieldset>
-
-                    <input type="submit" class="languageSpecificValue" data-text="create">
-                </form>
-
-                <hr>
-
-                <a href="tel:">Test tel</a><br>
-                <a href="sms:">Test sms</a><br>
-                <a href="geo:">Test geo</a><br>
-                <a href="http://www.google.fr/">Test web</a>
             </div>
         </div>
 
         <!-- /////////////////////////////////////////////////////////////////////////////////// -->
 
-        <div data-role="page" id="show_camera">
-            <div data-role="header">
-                <div data-role="navbar">
+        <div data-role="page" class="container" id="sms">
+            <div data-role="header" data-position="fixed">
+                <div class="navbar" data-role="navbar">
+                    <div>
+                        <table style="width: 100%">
+                            <tr>
+                                <td style="width: 50%">Test Téléphone</td>
+                                <td style="width: 50%; text-align: right;"><a href="tests/index.html">Tests</a></td>
+                            </tr>
+                        </table>
+                    </div>
                     <ul>
-                        <li><a href="#contact_cards" class="languagespecificHTML" data-text="menu1"></a></li>
-                        <li><a href="#add_a_contact" class="languagespecificHTML" data-text="menu2"></a></li>
-                        <li><a href="#" class="ui-btn-active ui-state-persist languagespecificHTML" data-text="menu3"></a></li>
+                        <li><a href="#call"><i class="fa fa-2x fa-phone"></i></a></li>
+                        <li><a href="#contacts"><i class="fa fa-2x fa-address-book"></i></a></li>
+                        <li><a href="#" class="ui-btn-active ui-state-persist"><i class="fa fa-2x fa-comments"></i></a></li>
                     </ul>
                 </div>
             </div>
             <div data-role="content">
-                <button id="cancel_all" class="languagespecificHTML" data-text="cancel_notifs"></button>
-
-                <hr>
-
-                <button id="btn_photo" class="languagespecificHTML" data-text="take_photo"></button>
-
-                <img id="photo" style="width: 100%;" src="">
-            </div>
-        </div>
-
-        <!-- /////////////////////////////////////////////////////////////////////////////////// -->
-
-        <div data-role="page" id="unit_tests">
-            <div data-role="header">
-                <link rel="stylesheet" href="tests/qunit-2.6.0.css">
-
-                <a href="#contact_cards">Retour</a>
-            </div>
-            <div data-role="content">
-                <div id="qunit"></div>
-                <div id="qunit-fixture"></div>
-
-                <script src="tests/qunit-2.6.0.js"></script>
-                <script src="tests/tests.js"></script>
+                <h2 class="languagespecificHTML" data-text="send_sms"></h2>
+                <input id="numberTxt" class="languageSpecificPlaceholder" data-text="phone_number" type="tel" />
+                <textarea id="messageTxt" class="languageSpecificPlaceholder" data-text="message" ></textarea>
+                <input id="btn_sms" type="button" class="languageSpecificValue" data-text="send" />
             </div>
         </div>
 

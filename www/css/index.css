@@ -153,8 +153,36 @@ html, body { /** for a container in all the screen */
     transform: rotateY(180deg);
 }
 
+#display_contacts ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+#display_contacts ul li {
+    margin: 2% 0 2% 0;
+    padding: 2%;
+}
+
 .img_contact {
-    width: 60%;
+    width: 100%;
     height: auto;
     border-radius: 10%;
+    vertical-align: middle;
+}
+
+#display_contacts table {
+    width: 100%;
+}
+
+#display_contacts ul li table tr > td {
+    padding: 2%;
+}
+
+#display_contacts ul li table tr > td:first-child {
+    width: 20%;
+}
+
+#display_contacts ul li table tr > td:last-child {
+    width: 80%;
 }

@@ -2,6 +2,7 @@ const NOTIF_1 = 1, NOTIF_2 = 2, NOTIF_3 = 3;
 
 //Pour ne pas prendre en compte le touch si l'utilisateur déplace son doigt
 var _dragging = false;
+
 var _userContacts, _nbContacts = 0;
 
 //Language
@@ -11,8 +12,7 @@ var frenchlanguageStringsURL = "i18n/fr/strings.json";
 var englishlanguageStringsURL = "i18n/en/strings.json";
 
 //Cordova events---------------------------------------------------------
-document.addEventListener("deviceready", onDeviceReady);
-
+document.addEventListener("deviceready", onDeviceReady, false);
 
 function getSpecificLanguageString(key) {
     value = languageStrings.languageSpecifications[0][key];
@@ -85,12 +85,11 @@ function onDeviceReady() {
     });
 
     getContacts();
-    $("#top_card").on("touchend", clickAnimateTopCard);
+    //$("#top_card").on("touchend", clickAnimateTopCard);
+    $("#form_send_call").on("submit", sendCall);
     $("#form_add_contact").on("submit", createContact);
-    $("#btn_call").on("touchend", receiveCall);
+    $("#btn_receive_call").on("touchend", receiveCall);
     $("#btn_sms").on("touchend", sendSms);
-    $("#btn_photo").on("touchend", takePhoto);
-    $("#cancel_all").on("touchend", cancelNotifs);
 
     //À chaque lancement d'app, on réinitialise la pastille de notifications
     cordova.plugins.notification.badge.configure({ autoClear: true });
@@ -160,37 +159,159 @@ function onResume() {
 
 
 
-//My events-----------------------------------------------------
-function clickAnimateTopCard() {
-    if (_dragging)
-        return;
+//My events--------------------------------------------------------------
+function sendCallByLink() {
+    var numberToCall = $(this).data("number");
 
-    $("#top_card").unbind("touchend");
-
-    var numCard = Math.floor((Math.random() * _nbContacts) + 0);
-
-    //Changing front card src
-    $(".card .front .small").attr("srcset", "img/card.png");
-    $(".card .front .medium").attr("srcset", "img/card.png");
-    $(".card .front img").attr("src", "img/card.png");
-
-    //Changing back card src
-    $(".card .back .small").attr("srcset", "img/card.png");
-    $(".card .back .medium").attr("srcset", "img/card.png");
-    $(".card .back img").attr("src", "img/card.png");
-
-    showContactInfos(numCard);
-
-    $(".card").transition({scale:1, duration: 200}, function() {
-        $(".card .front").on("touchend", clickAnimateFrontCard);
-    });
+    if(confirm(getSpecificLanguageString("send_call") + " " + numberToCall + " ?")) {
+        if(numberToCall.trim() != "") {
+            cordova.plugins.CordovaCall.sendCall(numberToCall);
+        }
+    }
 }
 
-function showContactInfos(numCard) {
-    if(_nbContacts > 0) {
-        var frontCard = "", backCard = "";
 
-        //Displaying contact informations on the front of the card
+function sendCall(ev) {
+    ev.preventDefault();
+
+    var numberToCall = $("#number_to_call").val();
+
+    if(numberToCall.trim() != "") {
+        $("#number_to_call").val("");
+        cordova.plugins.CordovaCall.sendCall(numberToCall);
+    }
+}
+
+
+function receiveCall() {
+    cordova.plugins.CordovaCall.receiveCall('David Marcus');
+}
+
+
+function successCreateContact(contacts) {
+    $(".validation_errors").empty();
+    $("#prenom").val("");
+    $("#nom").val("");
+    $("#numTel").val("");
+    $(".validation_errors").html("Contact créé avec succès");
+    //On update la liste des contacts
+    getContacts();
+}
+
+function errorCreateContact(contactError) {
+    $(".validation_errors").empty();
+    alert("Erreur lors de la création du contact");
+}
+
+function addContact(nom, prenom, numTel) {
+    if(nom != "" && prenom != "" && numTel != "") {
+        var newContact = navigator.contacts.create();
+
+        var name = new ContactName();
+        name.givenName = prenom;
+        name.familyName = nom;
+        newContact.name = name;
+
+        var phoneNumbers = [];
+        phoneNumbers[0] = new ContactField('mobile', numTel, true);
+        newContact.phoneNumbers = phoneNumbers;
+
+        newContact.save(successCreateContact, errorCreateContact);
+    }
+}
+
+function createContact(ev) {
+    ev.preventDefault();
+
+    addContact($("#nom").val().trim(), $("#prenom").val().trim(), $("#numTel").val().trim());
+}
+
+
+function onSuccessGet(contacts) {
+    //Tri par ordre alphabétique
+    var cSort = function(a, b) {
+        //Ces tests sont pour gérer les contacts sans nom et prénom
+        if((a.name.formatted) == null) {
+            if((b.name.formatted) == null) {
+                return 0;
+            }
+            else {
+                return 1;
+            }
+        }
+        else {
+            if((b.name.formatted) == null) {
+                return -1;   
+            }
+            else {
+                aName = a.name.formatted.toUpperCase();
+                bName = b.name.formatted.toUpperCase();
+
+                return aName < bName ? -1 : (aName == bName ? 0 : 1);
+            }
+        }
+    };
+    _userContacts = contacts.sort(cSort);
+    _nbContacts = contacts.length;
+    showContacts();
+}
+
+function onErrorGet(contactError) {
+    alert("Erreur de récupération des contacts !");
+}
+
+function getContacts() {
+    var options = new ContactFindOptions();
+    options.filter = "";
+    options.multiple = true;
+    var filter = [""];
+    navigator.contacts.find(filter, onSuccessGet, onErrorGet, options);
+}
+
+
+function showContacts() {
+    $(".link_send_call").unbind();
+    $("#display_contacts").empty();
+
+    if(_nbContacts > 0) {
+        var contactsTable = "";
+
+        contactsTable += "<ul><li>";
+        for(var i = 0; i < _nbContacts; i++) {
+            contactsTable += "<table><tr>";
+            contactsTable += "<td>";
+            if((_userContacts[i].photos) != null) {
+                contactsTable += "<img class='img_contact' src='" + _userContacts[i].photos[0].value + "'>";
+            }
+            else {
+                contactsTable += "<img class='img_contact' src='img/blank_profile_picture.png'>";
+            }
+            contactsTable += "</td>";
+
+
+            contactsTable += "<td>";
+            if((_userContacts[i].name.formatted) != null) {
+                contactsTable += _userContacts[i].name.formatted + "<br>";
+            }
+            else {
+                contactsTable += "-<br>";
+            }
+
+            if((_userContacts[i].phoneNumbers) != null) {
+                contactsTable += "<a class='link_send_call' data-number='" + _userContacts[i].phoneNumbers[0].value + "'>" + _userContacts[i].phoneNumbers[0].value + "</a>";
+            }
+            else {
+                contactsTable += "-";
+            }
+            contactsTable += "</td>";
+            contactsTable += "</tr></table>";
+        }
+        contactsTable += "</li></ul>";
+
+
+        $("#display_contacts").html(contactsTable);
+
+        /*Displaying contact informations on the front of the card
         if((_userContacts[numCard].photos) != null) {
             frontCard += "<p><img class='img_contact' src='" + _userContacts[numCard].photos[0].value + "'></p><br><hr><br>";
         }
@@ -253,109 +374,16 @@ function showContactInfos(numCard) {
             backCard += "<p><b>" + getSpecificLanguageString("website") + "</b><br>-</p>";
         }
 
-        $(".info_contact_back").html(backCard);
+        $(".info_contact_back").html(backCard);*/
     }
     else {
-        $(".info_contact_front").html("<p><b>" + getSpecificLanguageString("no_contact") + "</b></p>");
+        contactsTable += "<li>Pas de contact</li>";
+        $("#display_contacts").html(contactsTable);
     }
+
+    $(".link_send_call").on("touchend", sendCallByLink);
 }
 
-function clickAnimateFrontCard() {
-    if (_dragging)
-        return;
-
-    $(".card .front").unbind("touchend");
-
-    $(".card").transition({rotateY:'180deg', duration: 200},
-                          function() {
-        $(".card .back").on("touchend", clickAnimateBackCard);
-    });
-}
-
-function clickAnimateBackCard() {
-    if (_dragging)
-        return;
-
-    $(".card .back").unbind("touchend");
-
-    $(".card")
-        .transition({scale:0, duration: 200})
-        .transition({rotateY:'0deg', duration: 20},
-                    function() {
-        //Changing front card src
-        $(".card .front .small").attr("srcset", "");
-        $(".card .front .medium").attr("srcset", "");
-        $(".card .front img").attr("src", "");
-
-        //Changing back card src
-        $(".card .back .small").attr("srcset", "");
-        $(".card .back .medium").attr("srcset", "");
-        $(".card .back img").attr("src", "");
-
-        $(".info_contact_front").empty();
-        $(".info_contact_back").empty();
-
-
-        $("#top_card").on("touchend", clickAnimateTopCard);
-    });
-}
-
-function onSuccess(contacts) {
-    _userContacts = contacts;
-    _nbContacts = contacts.length;
-}
-
-function onError(contactError) {
-    alert("Erreur de récupération des contacts !");
-}
-
-function getContacts() {
-    var options = new ContactFindOptions();
-    options.filter = "";
-    options.multiple = true;
-    var filter = [""];
-    navigator.contacts.find(filter, onSuccess, onError, options);
-}
-
-function successCreateContact(contacts) {
-    $(".validation_errors").empty();
-    $("#prenom").val("");
-    $("#nom").val("");
-    $("#numTel").val("");
-    alert("Contact créé avec succès");
-    //On update la liste des contacts pour les contact cards
-    getContacts();
-}
-
-function errorCreateContact(contactError) {
-    $(".validation_errors").empty();
-    alert("Erreur lors de la création du contact");
-}
-
-function createContact(ev) {
-    ev.preventDefault();
-
-    if($("#nom").val().trim() != "" && $("#prenom").val().trim() != "") {
-        var newContact = navigator.contacts.create();
-        var name = new ContactName();
-        name.givenName = $("#prenom").val().trim();
-        name.familyName = $("#nom").val().trim();
-        newContact.name = name;
-        if($("#numTel").val().trim() != "") {
-            var phoneNumbers = [];
-            phoneNumbers[0] = new ContactField('mobile', $("#numTel").val().trim(), true);
-            newContact.phoneNumbers = phoneNumbers;
-        }
-        newContact.save(successCreateContact, errorCreateContact);
-    }
-    else {
-        $(".validation_errors").html("<b style='color:red;'>Les champs nom et prénom sont requis</b>");
-    }
-}
-
-function receiveCall() {
-    cordova.plugins.CordovaCall.receiveCall('David Marcus');
-}
 
 function successSendSms() {
     $('#numberTxt').val("");
@@ -383,38 +411,4 @@ function sendSms() {
         var error = function (e) { alert('Erreur d\'envoi :' + e); };
         sms.send(number, message, options, successSendSms, error);
     }
-}
-
-function cancelNotifs() {
-    if (_dragging)
-        return;
-
-    cordova.plugins.notification.local.cancelAll();
-}
-
-function failPhoto(message) {
-    if (message != "No Image Selected") {
-        alert('Failed because: ' + message);
-    }
-}
-
-function successPhoto(imageURI) {
-    $("#photo").attr("src", imageURI);
-}
-
-function takePhoto() {
-    if (_dragging)
-        return;
-
-    var options = {
-        // Some common settings are 20, 50, and 100
-        quality: 50,
-        destinationType: Camera.DestinationType.FILE_URI,
-        encodingType: Camera.EncodingType.JPEG,
-        mediaType: Camera.MediaType.PICTURE,
-        saveToPhotoAlbum: true,
-        correctOrientation: true //Corrects Android orientation quirks
-    }
-
-    navigator.camera.getPicture(successPhoto, failPhoto, options);
 }
