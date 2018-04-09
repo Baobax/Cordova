@@ -28,7 +28,6 @@ function onErrorRemove() {
 
 function onSuccessFind(contact) {
     contact[0].remove(onSuccessRemove, onErrorRemove);
-    //alert(contact[0].name.formatted);
 }
 
 function onErrorFind(contactError) {

@@ -87,9 +87,9 @@ function onDeviceReady() {
     getContacts();
     //$("#top_card").on("touchend", clickAnimateTopCard);
     $("#form_send_call").on("submit", sendCall);
-    $("#form_add_contact").on("submit", createContact);
     $("#btn_receive_call").on("touchend", receiveCall);
-    $("#btn_sms").on("touchend", sendSms);
+    $("#form_add_contact").on("submit", createContact);
+    $("#form_send_sms").on("submit", sendSms);
 
     //À chaque lancement d'app, on réinitialise la pastille de notifications
     cordova.plugins.notification.badge.configure({ autoClear: true });
@@ -160,7 +160,14 @@ function onResume() {
 
 
 //My events--------------------------------------------------------------
-function sendCallByLink() {
+function sendCallByLink(ev) {
+    if(_dragging) {
+        return;    
+    }
+
+    //Pour éviter que l'événemtnt de touch sur la ligne ne se déclenche
+    ev.stopPropagation();
+
     var numberToCall = $(this).data("number");
 
     if(confirm(getSpecificLanguageString("send_call") + " " + numberToCall + " ?")) {
@@ -183,7 +190,11 @@ function sendCall(ev) {
 }
 
 
-function receiveCall() {
+function receiveCall(ev) {
+    if(_dragging) {
+        return;    
+    }
+
     cordova.plugins.CordovaCall.receiveCall('David Marcus');
 }
 
@@ -193,7 +204,7 @@ function successCreateContact(contacts) {
     $("#prenom").val("");
     $("#nom").val("");
     $("#numTel").val("");
-    $(".validation_errors").html("Contact créé avec succès");
+    $(".validation_errors").html("<b style='color: green'>Contact créé avec succès<b>");
     //On update la liste des contacts
     getContacts();
 }
@@ -270,15 +281,16 @@ function getContacts() {
 
 
 function showContacts() {
+    $("#display_contacts ul li").unbind("touchend");
     $(".link_send_call").unbind();
     $("#display_contacts").empty();
+    var contactsTable = "";
 
     if(_nbContacts > 0) {
-        var contactsTable = "";
 
-        contactsTable += "<ul><li>";
+        contactsTable += "<ul>";
         for(var i = 0; i < _nbContacts; i++) {
-            contactsTable += "<table><tr>";
+            contactsTable += "<li><div class='contact_front'><table><tr>";
             contactsTable += "<td>";
             if((_userContacts[i].photos) != null) {
                 contactsTable += "<img class='img_contact' src='" + _userContacts[i].photos[0].value + "'>";
@@ -304,12 +316,34 @@ function showContacts() {
                 contactsTable += "-";
             }
             contactsTable += "</td>";
-            contactsTable += "</tr></table>";
+            contactsTable += "</tr></table></div>"
+
+            //-------BACK--------------------------
+
+            contactsTable += "<div class='contact_back'><table><tr>";
+            contactsTable += "<td>";
+            if((_userContacts[i].emails) != null) {
+                contactsTable += "<b>" + getSpecificLanguageString("email") + "</b>: " + _userContacts[i].emails[0].value + "<br>";
+            }
+            else {
+                contactsTable += "<b>" + getSpecificLanguageString("email") + "</b>: -<br>";
+            }
+            
+            if((_userContacts[i].addresses) != null) {
+                contactsTable += "<b>" + getSpecificLanguageString("address") + "</b>: " + _userContacts[i].addresses[0].streetAddress + ", " + _userContacts[i].addresses[0].locality;
+            }
+            else {
+                contactsTable += "<b>" + getSpecificLanguageString("address") + "</b>: -";
+            }
+            contactsTable += "</td>";
+            contactsTable +="</tr></table></div></li>";
         }
-        contactsTable += "</li></ul>";
+        contactsTable += "</ul>";
 
 
         $("#display_contacts").html(contactsTable);
+        $("#display_contacts ul li").on("touchend", flipContact);
+        $(".link_send_call").on("touchend", sendCallByLink);
 
         /*Displaying contact informations on the front of the card
         if((_userContacts[numCard].photos) != null) {
@@ -381,34 +415,36 @@ function showContacts() {
         $("#display_contacts").html(contactsTable);
     }
 
-    $(".link_send_call").on("touchend", sendCallByLink);
 }
 
+function flipContact(ev) {
+    if(_dragging) {
+        return;    
+    }
+
+    $(this).transition({rotateY:'+=180deg', duration: 200}, function() {});
+}
 
 function successSendSms() {
-    $('#numberTxt').val("");
-    $('#messageTxt').val("");
+    $('#form_send_sms #numberTxt').val("");
+    $('#form_send_sms #messageTxt').val("");
     alert('Message envoyé');
 }
 
-function sendSms() {
-    if (_dragging)
-        return;
+function sendSms(ev) {
+    ev.preventDefault();
 
-    if($('#numberTxt').val().toString() != "" && $('#messageTxt').val() != "") {
-        var number = $('#numberTxt').val().toString(); /* iOS: ensure number is actually a string */
-        var message = $('#messageTxt').val();
-        console.log("number=" + number + ", message= " + message);
+    var number = $('#form_send_sms #numberTxt').val().toString(); /* iOS: ensure number is actually a string */
+    var message = $('#form_send_sms #messageTxt').val();
 
-        var options = {
-            replaceLineBreaks: true, // true to replace \n by a new line, false by default
-            android: {
-                //intent: 'INTENT'  // send SMS with the native android SMS messaging
-                intent: '' // send SMS without open any other app
-            }
-        };
+    var options = {
+        replaceLineBreaks: true, // true to replace \n by a new line, false by default
+        android: {
+            //intent: 'INTENT'  // send SMS with the native android SMS messaging
+            intent: '' // send SMS without open any other app
+        }
+    };
 
-        var error = function (e) { alert('Erreur d\'envoi :' + e); };
-        sms.send(number, message, options, successSendSms, error);
-    }
+    var error = function (e) { alert('Erreur d\'envoi :' + e); };
+    sms.send(number, message, options, successSendSms, error);
 }

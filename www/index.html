@@ -15,7 +15,7 @@
     </head>
     <body>
         <div data-role="page" class="container" id="call">
-            <div data-role="header" data-position="fixed">
+            <div data-role="header" data-position="fixed" data-tap-toggle="false">
                 <div class="navbar" data-role="navbar">
                     <div>
                         <table style="width: 100%">
@@ -48,7 +48,7 @@
         <!-- /////////////////////////////////////////////////////////////////////////////////// -->
 
         <div data-role="page" class="container" id="contacts">
-            <div data-role="header" data-position="fixed">
+            <div data-role="header" data-position="fixed" data-tap-toggle="false">
                 <div class="navbar" data-role="navbar">
                     <div>
                         <table style="width: 100%">
@@ -156,7 +156,7 @@
         <!-- /////////////////////////////////////////////////////////////////////////////////// -->
 
         <div data-role="page" class="container" id="sms">
-            <div data-role="header" data-position="fixed">
+            <div data-role="header" data-position="fixed" data-tap-toggle="false">
                 <div class="navbar" data-role="navbar">
                     <div>
                         <table style="width: 100%">
@@ -175,9 +175,11 @@
             </div>
             <div data-role="content">
                 <h2 class="languagespecificHTML" data-text="send_sms"></h2>
-                <input id="numberTxt" class="languageSpecificPlaceholder" data-text="phone_number" type="tel" />
-                <textarea id="messageTxt" class="languageSpecificPlaceholder" data-text="message" ></textarea>
-                <input id="btn_sms" type="button" class="languageSpecificValue" data-text="send" />
+                <form id="form_send_sms" method="get">
+                    <input id="numberTxt" class="languageSpecificPlaceholder" data-text="phone_number" type="tel" required />
+                    <textarea id="messageTxt" class="languageSpecificPlaceholder" data-text="message"></textarea>
+                    <input type="submit" class="languageSpecificValue" data-text="send" />
+                </form>
             </div>
         </div>
 
