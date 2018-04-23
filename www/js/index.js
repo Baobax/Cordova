@@ -1,7 +1,7 @@
 const NOTIF_1 = 1, NOTIF_2 = 2, NOTIF_3 = 3;
 
 //Pour ne pas prendre en compte le touch si l'utilisateur déplace son doigt
-var _dragging = false;
+var _dragging = false, _testing = false;
 
 var _userContacts, _nbContacts = 0;
 
@@ -52,6 +52,9 @@ function language() {
         $(".languageSpecificValue").each(function(){
             $(this).attr("value",languageStrings.languageSpecifications[0][$(this).data("text")]);
         });
+        $(".languageSpecificAriaLabel").each(function(){
+            $(this).attr("aria-label",languageStrings.languageSpecifications[0][$(this).data("text")]);
+        });
     });
 }
 
@@ -100,6 +103,8 @@ function onDeviceReady() {
     cordova.plugins.notification.local.on("clear", function (notification) {
         cordova.plugins.notification.badge.decrease(1);
     });
+
+    navigator.splashscreen.hide();
 }
 
 function scheduleNotification() {
@@ -204,7 +209,15 @@ function successCreateContact(contacts) {
     $("#prenom").val("");
     $("#nom").val("");
     $("#numTel").val("");
-    $(".validation_errors").html("<b style='color: green'>Contact créé avec succès<b>");
+    if(!_testing)
+        $.mobile.pageContainer.pagecontainer("change", "#contacts", { transition: "pop", reverse: true });
+    window.plugins.toast.showWithOptions(
+        {
+            message: "Contact créé avec succès",
+            duration: "long",
+            position: "bottom"
+        }
+    );
     //On update la liste des contacts
     getContacts();
 }
@@ -282,7 +295,7 @@ function getContacts() {
 
 function showContacts() {
     $("#display_contacts ul li").unbind("touchend");
-    $(".link_send_call").unbind();
+    $(".link_send_call").unbind("touchend");
     $("#display_contacts").empty();
     var contactsTable = "";
 
@@ -293,10 +306,10 @@ function showContacts() {
             contactsTable += "<li><div class='contact_front'><table><tr>";
             contactsTable += "<td>";
             if((_userContacts[i].photos) != null) {
-                contactsTable += "<img class='img_contact' src='" + _userContacts[i].photos[0].value + "'>";
+                contactsTable += "<img class='img_contact' src='" + _userContacts[i].photos[0].value + "' alt='" + getSpecificLanguageString("altContactImg") + "'>";
             }
             else {
-                contactsTable += "<img class='img_contact' src='img/blank_profile_picture.png'>";
+                contactsTable += "<img class='img_contact' src='img/blank_profile_picture.png' alt='" + getSpecificLanguageString("altContactImg") + "'>";
             }
             contactsTable += "</td>";
 
@@ -326,14 +339,14 @@ function showContacts() {
                 contactsTable += "<b>" + getSpecificLanguageString("email") + "</b>: " + _userContacts[i].emails[0].value + "<br>";
             }
             else {
-                contactsTable += "<b>" + getSpecificLanguageString("email") + "</b>: -<br>";
+                contactsTable += getSpecificLanguageString("no_mail") + "<br>";
             }
-            
+
             if((_userContacts[i].addresses) != null) {
                 contactsTable += "<b>" + getSpecificLanguageString("address") + "</b>: " + _userContacts[i].addresses[0].streetAddress + ", " + _userContacts[i].addresses[0].locality;
             }
             else {
-                contactsTable += "<b>" + getSpecificLanguageString("address") + "</b>: -";
+                contactsTable += getSpecificLanguageString("no_address");
             }
             contactsTable += "</td>";
             contactsTable +="</tr></table></div></li>";
@@ -411,7 +424,7 @@ function showContacts() {
         $(".info_contact_back").html(backCard);*/
     }
     else {
-        contactsTable += "<li>Pas de contact</li>";
+        contactsTable += "<h3>Pas de contact</h3>";
         $("#display_contacts").html(contactsTable);
     }
 
@@ -422,6 +435,7 @@ function flipContact(ev) {
         return;    
     }
 
+    //alert($(this).text());
     $(this).transition({rotateY:'+=180deg', duration: 200}, function() {});
 }
 
@@ -441,7 +455,7 @@ function sendSms(ev) {
         replaceLineBreaks: true, // true to replace \n by a new line, false by default
         android: {
             //intent: 'INTENT'  // send SMS with the native android SMS messaging
-            intent: '' // send SMS without open any other app
+            intent: '' // send SMS without opening any other app
         }
     };
 

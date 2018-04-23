@@ -22,7 +22,7 @@
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />
     </platform>
-    <preference name="SplashScreenDelay" value="2000" />
+    <preference name="SplashScreenDelay" value="10000" />
     <plugin name="cordova-plugin-contacts" spec="^3.0.1">
         <variable name="CONTACTS_USAGE_DESCRIPTION" value="Display contact cards" />
     </plugin>
@@ -49,6 +49,7 @@
     <plugin name="cordova-plugin-local-notification" spec="^0.9.0-beta.3" />
     <plugin name="cordova-plugin-badge" spec="^0.8.7" />
     <plugin name="cordova-plugin-file" spec="^6.0.1" />
+    <plugin name="cordova-plugin-x-toast" spec="^2.6.2" />
     <engine name="browser" spec="^5.0.3" />
     <engine name="ios" spec="^4.5.4" />
     <engine name="android" spec="^7.0.0" />

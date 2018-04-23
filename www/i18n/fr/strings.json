@@ -1,6 +1,9 @@
 {
     "languageSpecifications": [
         {
+            "call": "Appel",
+            "contacts": "Contacts",
+            "sms": "SMS",
             "name": "Nom",
             "phone_number": "Numéro de téléphone",
             "email": "eMail",
@@ -13,8 +16,10 @@
             "message": "Message",
             "send": "Envoyer",
             "create_contact": "Créer un contact",
-            "contacts": "Contacts",
+            "altContactImg": "Image de profil du contact",
             "first_name": "Prénom",
+            "no_mail": "Pas d'email",
+            "no_address": "Pas d'adresse",
             "reset": "Annuler saisies",
             "create": "Créer",
             "cancel_notifs": "Annuler les notifications",

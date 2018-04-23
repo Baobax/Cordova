@@ -1,4 +1,5 @@
 const NOM = "QUnit", PRENOM = "Test", NUMTEL = "0989876765";
+_testing = true;
 
 QUnit.test("Ajout d'un contact", function(assert) {
     var done = assert.async();

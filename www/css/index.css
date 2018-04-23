@@ -27,6 +27,10 @@ html, body { /** for a container in all the screen */
     height: 100%;
 }
 
+#form_add_contact {
+    padding: 5%;
+}
+
 #display_contacts ul {
     list-style: none;
     margin: 0;
